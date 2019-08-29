@@ -1,0 +1,22 @@
+{
+  "name": "2019fall_ant-man",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/utk-cs/2019fall_ant-man.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/utk-cs/2019fall_ant-man/issues"
+  },
+  "homepage": "https://github.com/utk-cs/2019fall_ant-man#readme",
+  "devDependencies": {
+    "electron": "^6.0.5"
+  }
+}
