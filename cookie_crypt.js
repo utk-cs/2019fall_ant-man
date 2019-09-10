@@ -1,39 +1,47 @@
 const aes = require('aes-js');
 const pbkdf2 = require('pbkdf2');
 
-const iv = Buffer.from('                ', 'utf-8');
-const salt = 'saltysalt';
-const keylen = 16;
+class ChromeCrypt {
+    constructor() {
+        if (process.platform === "win32") {
+            // TODO: Windows
+        } else {
+            this.iv = Buffer.from('                ', 'utf-8');
+            this.salt = 'saltysalt';
+            this.keylen = 16;
 
-const password = 'peanuts';
-const iterations = 1;
+            if (process.platform === "darwin") {
+                // TODO: OSX
+            } else { // process.platform === "linux", "freebsd", "sunos"
+                this.password = 'peanuts';
+                this.iterations = 1;
+            }
 
-const key = pbkdf2.pbkdf2Sync('peanuts', 'saltysalt', 1, 16);
+            this.key = pbkdf2.pbkdf2Sync(this.password, this.salt, this.iterations, this.keylen);
 
+            this.decrypt = (ctext) => {
+                var cipher;
+                var buf;
+                var mtext;
 
-function strip(buf) {
-    return buf.slice(
-        0,
-        -1 * buf[buf.length-1]  // Get the last value in buf, and exclude that number of elements from the slice.
-    );
-}
+                cipher = new aes.ModeOfOperation.cbc(this.key, this.iv);    // Must define cipher in function because js is stupid.
+                                                                            // Probably decrypt is getting called before cipher is made or something.
 
-function decrypt(ctext) {
-    var cipher;
-    var buf;
-    var mtext;
-
-    cipher = new aes.ModeOfOperation.cbc(key, iv);  // Must define cipher in function because js is stupid.
-                                                    // Probably decrypt is getting called before cipher is made or something.
-
-    ctext = ctext.slice(3);
-    buf = Buffer.from(cipher.decrypt(ctext));
-    buf = strip(buf);
-    mtext = buf.toString();
-    
-    return mtext;
+                ctext = ctext.slice(3);
+                buf = Buffer.from(cipher.decrypt(ctext));
+                buf = 
+                    buf.slice(
+                        0,
+                        -1 * buf[buf.length-1]
+                    );
+                mtext = buf.toString();
+                
+                return mtext;
+            };
+        }
+    }
 }
 
 module.exports = {
-    decrypt
+    ChromeCrypt
 }
