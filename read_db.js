@@ -5,9 +5,9 @@ const homedir = require('os').homedir();
 const decryptor = new cc.ChromeCrypt();
 
 if (process.platform === "linux") {
-    const DBPATH = `${homedir}/.config/google-chrome/Default/Cookies`;
+    var DBPATH = `${homedir}/.config/google-chrome/Default/Cookies`;
 } else if (process.platform === "darwin") {
-    const DBPATH = `${homedir}/Library/Application Support/Google/Chrome/Default/Cookies`;
+    var DBPATH = `${homedir}/Library/Application Support/Google/Chrome/Default/Cookies`;
 }
 
 // open the database
