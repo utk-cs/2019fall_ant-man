@@ -4,6 +4,7 @@
 // You can view documentation on what is possible with this item and other Electron objects here: https://electronjs.org/docs/api 
 const {app, BrowserWindow } = require('electron');
 
+global.$ = require('jquery/dist/jquery')
 // This might be something you will do regularly in javascript if you want to maintain a reference to an object.
 // If you do not keep this reference outside of the listener in some form, then it will get picked up by the garbage collector and get deleted.
 let win;
