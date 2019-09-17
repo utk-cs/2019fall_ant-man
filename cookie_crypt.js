@@ -12,18 +12,20 @@ class ChromeCrypt {
 
             if (process.platform === "darwin") {
                 const keychain = require('keychain');
-                this.password = keychain.getPassword(
+                var macPassword;
+                
+                keychain.getPassword(
                     {account: 'Chrome', service: 'Chrome Safe Storage'},
                     function(err, pass) {
                         if (err) {
                             throw err;
                         }
 
-                        return pass;
+                        macPassword = pass;
                     }
                 );
 
-                console.log(this.password);
+                this.password = macPassword;
                 this.iterations = 1003;
             } else { // process.platform === "linux", "freebsd", "sunos"
                 this.password = 'peanuts';
