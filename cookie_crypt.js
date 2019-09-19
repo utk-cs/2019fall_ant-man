@@ -11,21 +11,14 @@ class ChromeCrypt {
             this.keylen = 16;
 
             if (process.platform === "darwin") {
-                const keychain = require('keychain');
-                var macPassword;
-                
-                keychain.getPassword(
-                    {account: 'Chrome', service: 'Chrome Safe Storage'},
-                    function(err, pass) {
-                        if (err) {
-                            throw err;
-                        }
+                // Get password from OSX Keychain
+                const spawnSync = require('child_process').spawnSync;
+                let keychain = spawnSync('/usr/bin/security', ['find-generic-password', '-s', 'Chrome Safe Storage', '-a', 'Chrome', '-g']);
 
-                        macPassword = pass;
-                    }
-                );
-
-                this.password = macPassword;
+                // Extract password from output format of:
+                // password: "${PASSWORD}"
+                this.password = keychain.stderr.toString().match(/password: "(.*?)"/)[1];
+                console.log(this.password); // testing. Might still need to decode password from base64, but that shouldn't be too hard at all
                 this.iterations = 1003;
             } else { // process.platform === "linux", "freebsd", "sunos"
                 this.password = 'peanuts';
