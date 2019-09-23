@@ -23,7 +23,7 @@ db.all(sql, [], (err, rows) => {
     rows.forEach((row) => {
         // console.log("|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", decryptor.decrypt(row.encrypted_value), "|");
         cookie_type(row)
-        
+
     });
 });
 
@@ -32,6 +32,7 @@ db.all(sql, [], (err, rows) => {
 var cookie_type = (row) => {
     // console.log("yeet")
 
+    
     //Google analytics - tracking
     if(row.name === "_ga" || row.name === "__utma" || row.name === "__utmz" || row.name === "_gcl_au") {
         console.log("Google Analytics ", "|", "tracking ","|",row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", decryptor.decrypt(row.encrypted_value), "|");
