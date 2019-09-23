@@ -37,7 +37,7 @@ var cookie_type = (row) => {
         console.log("Google Analytics ", "|", "tracking ","|",row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", decryptor.decrypt(row.encrypted_value), "|");
     }
     //quantcast tracking
-    else if(row.expires === "__qca") {
+    else if(row.names === "__qca") {
         console.log("Quantcast ", "|", "tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", decryptor.decrypt(row.encrypted_value), "|");
     }
     //cloud fare non tracking
