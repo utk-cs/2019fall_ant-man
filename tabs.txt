@@ -12,3 +12,16 @@
     
     Cloudfare
         https://support.cloudflare.com/hc/en-us/articles/200170156-Understanding-the-Cloudflare-Cookies
+
+| Visualize |
+* Have a method for showing the user where their cookies are originating
+* Tie a company to a cookie and show a bubble graph saying who gives them the most cookies and are there any leaders
+* Tab will be just filled with different sized bubbles
+* Feed this quantCast Data and Cloudfare Data into this tab
+* Probably and iteration 5 tab
+
+| About Us |
+* This one is questionable, but nonetheless it could be made
+* Its just a tab about the creators
+	
+
