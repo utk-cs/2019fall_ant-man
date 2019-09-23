@@ -52,6 +52,7 @@ var cookie_type = (row) => {
         console.log("Unknown ", "|", "Unknown ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", decryptor.decrypt(row.encrypted_value), "|");
     }
 
+    
 
 }
 
