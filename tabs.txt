@@ -1,0 +1,14 @@
+| Learn more |
+    *Add information about each type of cookie sources 
+    *information will be worded in a way where the reader does not have to be technical to Understand
+    *Add lots of images and analogies 
+
+
+    Google Analytics
+        https://developers.google.com/analytics/devguides/collection/analyticsjs/cookie-usage
+
+    QuantCast
+        https://webmasters.stackexchange.com/questions/17912/what-does-the-quantcast-qca-cookie-do
+    
+    Cloudfare
+        https://support.cloudflare.com/hc/en-us/articles/200170156-Understanding-the-Cloudflare-Cookies
