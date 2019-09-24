@@ -35,11 +35,14 @@ class ChromeCrypt {
                 cipher = new aes.ModeOfOperation.cbc(this.key, this.iv);    // Must define cipher in function because js is stupid.
                                                                             // Probably decrypt is getting called before cipher is made or something.
 
+                // If ctext begins with v10, remove it
                 if (Buffer.from("v10").equals(ctext.slice(0, 3))) {
                     ctext = ctext.slice(3);
                 }
 
                 buf = Buffer.from(cipher.decrypt(ctext));
+
+                // Remove padding
                 buf = 
                     buf.slice(
                         0,
@@ -59,12 +62,15 @@ class ChromeCrypt {
                 cipher = new aes.ModeOfOperation.cbc(this.key, this.iv);    // Must define cipher in function because js is stupid.
                                                                             // Probably decrypt is getting called before cipher is made or something.
                 
+                // Convert mtext to buffer if not already
                 if (typeof(mtext) === "string") {
                     mtext = Buffer.from(mtext);
                 }
 
+                // Append v10 to buffer
                 mtext = Buffer.concat([Buffer.from("v10"), mtext]);
 
+                // Pad buffer to multiple of 16 bytes
                 padn    = 16 - (mtext.length % 16);
                 padding = Buffer.alloc(padn);
                 padding.fill(padn);
