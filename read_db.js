@@ -1,5 +1,5 @@
 const sqlite3 = require('sqlite3').verbose();
-const cc = require('./cookie_crypt.js');
+const cc = require('./cookie_crypt');
 const homedir = require('os').homedir();
 
 const decryptor = new cc.ChromeCrypt();

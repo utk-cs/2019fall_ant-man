@@ -35,7 +35,10 @@ class ChromeCrypt {
                 cipher = new aes.ModeOfOperation.cbc(this.key, this.iv);    // Must define cipher in function because js is stupid.
                                                                             // Probably decrypt is getting called before cipher is made or something.
 
-                ctext = ctext.slice(3);
+                if (Buffer.from("v10").equals(ctext.slice(0, 3))) {
+                    ctext = ctext.slice(3);
+                }
+
                 buf = Buffer.from(cipher.decrypt(ctext));
                 buf = 
                     buf.slice(
@@ -45,6 +48,31 @@ class ChromeCrypt {
                 mtext = buf.toString();
                 
                 return mtext;
+            };
+
+            this.encrypt = (mtext) => {
+                var cipher;
+                var ctext;
+                var padding;
+                var padn;
+
+                cipher = new aes.ModeOfOperation.cbc(this.key, this.iv);    // Must define cipher in function because js is stupid.
+                                                                            // Probably decrypt is getting called before cipher is made or something.
+                
+                if (typeof(mtext) === "string") {
+                    mtext = Buffer.from(mtext);
+                }
+
+                mtext = Buffer.concat([Buffer.from("v10"), mtext]);
+
+                padn    = 16 - (mtext.length % 16);
+                padding = Buffer.alloc(padn);
+                padding.fill(padn);
+                mtext = Buffer.concat([mtext, padding]);
+
+                ctext = cipher.encrypt(mtext);
+                
+                return ctext;
             };
         }
     }
