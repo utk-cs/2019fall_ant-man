@@ -67,9 +67,6 @@ class ChromeCrypt {
                     mtext = Buffer.from(mtext);
                 }
 
-                // Append v10 to buffer
-                mtext = Buffer.concat([Buffer.from("v10"), mtext]);
-
                 // Pad buffer to multiple of 16 bytes
                 padn    = 16 - (mtext.length % 16);
                 padding = Buffer.alloc(padn);
@@ -77,6 +74,9 @@ class ChromeCrypt {
                 mtext = Buffer.concat([mtext, padding]);
 
                 ctext = cipher.encrypt(mtext);
+
+                // Append v10 to buffer
+                ctext = Buffer.concat([Buffer.from("v10"), ctext]);
                 
                 return ctext;
             };
