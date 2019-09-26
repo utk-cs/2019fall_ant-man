@@ -14,7 +14,12 @@ class ChromeDB {
         var db = new sqlite3(DBPATH);
 
         try {
-            var stmt = db.prepare("SELECT * FROM cookies WHERE host_key=@host_key AND name=@name AND path=@path");
+            var stmt = db.prepare(
+                "SELECT * FROM cookies WHERE " +
+                    "host_key=@host_key AND " +
+                    "name=@name AND " +
+                    "path=@path"
+            );
             var rv = stmt.get(cookie);
         } catch {
             db.close();
