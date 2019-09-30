@@ -72,6 +72,11 @@ var cookie_type = (row) => {
         console.log("Adobe Analytics ", "|", "tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", decryptor.decrypt(row.encrypted_value), "|");
     }
 
+    //Siebel cookie
+    else if(row.name.startsWith("_sn")) {
+        console.log("Oracle (Siebel) ", "|", "tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", decryptor.decrypt(row.encrypted_value), "|");
+    }
+
     //cloud fare non tracking
     else if(row.name === "__cfduid") {
         console.log("Cloudflare ", "|", "non-tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", row.expires_utc, "|", decryptor.decrypt(row.encrypted_value), "|");
