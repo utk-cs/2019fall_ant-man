@@ -9,13 +9,22 @@ if (process.platform === "linux") {
     DBPATH = `${homedir}/Library/Application Support/Google/Chrome/Default/Cookies`;
 }
 
-var db = new sqlite3(DBPATH);
-
 class ChromeDB {
     static getCookieChrome(cookie) {
-        var stmt = db.prepare("SELECT * FROM cookies WHERE host_key=@host_key AND name=@name AND path=@path");
-        var rv = stmt.get(cookie);
-        
+        var db = new sqlite3(DBPATH);
+
+        try {
+            var stmt = db.prepare(
+                "SELECT * FROM cookies WHERE " +
+                    "host_key=@host_key AND " +
+                    "name=@name AND " +
+                    "path=@path"
+            );
+            var rv = stmt.get(cookie);
+        } catch {
+            db.close();
+        }
+
         return rv;
     }
 
@@ -25,40 +34,97 @@ class ChromeDB {
             cookie.value = '';
         }
 
-        var stmt = db.prepare(
-            "INSERT INTO cookies (" +
-                "creation_utc, " +
-                "host_key, " +
-                "name, " +
-                "value, " +
-                "path, " +
-                "expires_utc, " +
-                "is_secure, " +
-                "is_httponly, " +
-                "last_access_utc, " +
-                "has_expires, " +
-                "is_persistent, " +
-                "priority, " +
-                "encrypted_value, " +
-                "samesite" +
-            ") VALUES (" +
-                "@creation_utc, " +
-                "@host_key, " +
-                "@name, " +
-                "@value, " +
-                "@path, " +
-                "@expires_utc, " +
-                "@is_secure, " +
-                "@is_httponly, " +
-                "@last_access_utc, " +
-                "@has_expires, " +
-                "@is_persistent, " +
-                "@priority, " +
-                "@encrypted_value, " +
-                "@samesite" +
-            ")"
-        );
-        var rv = stmt.run(cookie);
+        var db = new sqlite3(DBPATH);
+
+        try {
+            var stmt = db.prepare(
+                "INSERT INTO cookies (" +
+                    "creation_utc, " +
+                    "host_key, " +
+                    "name, " +
+                    "value, " +
+                    "path, " +
+                    "expires_utc, " +
+                    "is_secure, " +
+                    "is_httponly, " +
+                    "last_access_utc, " +
+                    "has_expires, " +
+                    "is_persistent, " +
+                    "priority, " +
+                    "encrypted_value, " +
+                    "samesite" +
+                ") VALUES (" +
+                    "@creation_utc, " +
+                    "@host_key, " +
+                    "@name, " +
+                    "@value, " +
+                    "@path, " +
+                    "@expires_utc, " +
+                    "@is_secure, " +
+                    "@is_httponly, " +
+                    "@last_access_utc, " +
+                    "@has_expires, " +
+                    "@is_persistent, " +
+                    "@priority, " +
+                    "@encrypted_value, " +
+                    "@samesite" +
+                ")"
+            );
+            var rv = stmt.run(cookie);
+        } catch {
+            db.close();
+        }
+     
+        return rv;
+    }
+
+    static modifyCookieChrome(cookie) {
+        var db = new sqlite3(DBPATH);
+
+        try {
+            var stmt = db.prepare(
+                "UPDATE cookies SET " +
+                    "creation_utc = @creation_utc, " +
+                    "host_key = @host_key, " +
+                    "name = @name, " +
+                    "value = @value, " +
+                    "path = @path, " +
+                    "expires_utc = @expires_utc, " +
+                    "is_secure = @is_secure, " +
+                    "is_httponly = @is_httponly, " +
+                    "last_access_utc = @last_access_utc, " +
+                    "has_expires = @has_expires, " +
+                    "is_persistent = @is_persistent, " +
+                    "priority = @priority, " +
+                    "encrypted_value = @encrypted_value, " +
+                    "samesite = @samesite " +
+                "WHERE " +
+                    "host_key = @host_key AND " +
+                    "name = @name AND " +
+                    "path = @path"
+            );
+            var rv = stmt.run(cookie);
+        } catch {
+            db.close();
+        }
+
+        return rv;
+    }
+
+    static deleteCookieChrome(cookie) {
+        var db = new sqlite3(DBPATH);
+
+        try {
+            var stmt = db.prepare(
+                "DELETE FROM cookies WHERE " +
+                    "host_key = @host_key AND " +
+                    "name = @name AND " +
+                    "path = @path"
+            );
+            var rv = stmt.run(cookie);
+        } catch {
+            db.close();
+        }
 
         return rv;
     }

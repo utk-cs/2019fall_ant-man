@@ -1,0 +1,20 @@
+/*Detailed View*/
+Create window that will display the information of a cookie. 
+It should be dynamic so that it can easily be updated from selectly from the cookie.
+Selecting the cookie should be able to be done from the table and potentialy other sources.
+
+Perhaps show the cookie info using a form. Each piece of data will have it's own
+textbox/textarea, which will be automatically populated with the info from the database
+when the row in the table is clicked. From there, the user will be able to directly
+edit the form and save or undo their changes. Perhaps they could also save the info
+as a new cookie.
+
+/*Botton Row*/
+Functionality to the bottons needs to be added.
+Delete button should be able to delete the cookie not only on the database but on the users computer as well.
+Randomize Cookie should randomize specific values that we decided on like anything with location data.
+Something Else to Cookie will probably become Modify Cookie to allow users to modify what they want.
+Save as new would create a new cookie and populate it with info from the form.
+Future stuff might be some sort of smart randomize, which will detect what type of data the cookie holds
+and randomize it within the possible values of that data. For example, it might see a value is 37916, detect
+it as a zip code, and change it to 11422, another valid zip code. Yet still a random one.
