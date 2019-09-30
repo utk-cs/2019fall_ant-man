@@ -39,9 +39,39 @@ var cookie_type = (row) => {
     }
 
     //quantcast tracking
-    else if(row.names === "__qca") {
+    else if(row.name === "__qca") {
         console.log("Quantcast ", "|", "tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", decryptor.decrypt(row.encrypted_value), "|");
     }
+
+    //adobe analytics cookie
+    else if(row.name === "s_ecid") {
+        console.log("Adobe Analytics ", "|", "tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", decryptor.decrypt(row.encrypted_value), "|");
+    }
+    //adobe analytics cookie
+    else if(row.name === "s_vi") {
+        console.log("Adobe Analytics ", "|", "tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", decryptor.decrypt(row.encrypted_value), "|");
+        // console.log(row.name.padEnd(20));
+    }
+
+    //adobe analytics cookie
+    else if(row.name === "s_fid") {
+        console.log("Adobe Analytics ", "|", "tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", decryptor.decrypt(row.encrypted_value), "|");
+    }
+
+    //adobe analytics cookie
+    else if(row.name === "adcloud") {
+        console.log("Adobe Analytics ", "|", "tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", decryptor.decrypt(row.encrypted_value), "|");
+    }
+
+    //adobe analytics cookie
+    else if(row.name.startsWith("ev_sync")) {
+        console.log("Adobe Analytics ", "|", "tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", decryptor.decrypt(row.encrypted_value), "|");
+    }
+    //adobe analytics cookie
+    else if(row.name.startsWith("everest_")) {
+        console.log("Adobe Analytics ", "|", "tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", decryptor.decrypt(row.encrypted_value), "|");
+    }
+
     //cloud fare non tracking
     else if(row.name === "__cfduid") {
         console.log("Cloudflare ", "|", "non-tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", row.expires_utc, "|", decryptor.decrypt(row.encrypted_value), "|");
@@ -66,16 +96,10 @@ var cookie_type = (row) => {
     else if(row.name === "AWSALB") {
         console.log("AWS sticky sessions ", "|", "non-tracking ","|",row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", row.expires_utc, "|", decryptor.decrypt(row.encrypted_value), "|");
     }
-
-
-
     //log everything else as unknown until more research is done
     else {
         console.log("Unknown ", "|", "Unknown ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", decryptor.decrypt(row.encrypted_value), "|");
     }
-
-
-
 
 }
 
