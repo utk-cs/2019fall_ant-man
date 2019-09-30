@@ -52,6 +52,11 @@ var cookie_type = (row) => {
         console.log("Adobe Analytics ", "|", "tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", decryptor.decrypt(row.encrypted_value), "|");
         // console.log(row.name.padEnd(20));
     }
+    //adobe analytics cookie
+    else if(row.name === "s_cc" || row.name === "s_sq") {
+        console.log("Adobe Analytics ", "|", "tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", decryptor.decrypt(row.encrypted_value), "|");
+            // console.log(row.name.padEnd(20));
+    }
 
     //adobe analytics cookie
     else if(row.name === "s_fid") {
