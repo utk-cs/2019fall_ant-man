@@ -76,11 +76,27 @@ var cookie_type = (row) => {
     else if(row.name.startsWith("everest_")) {
         console.log("Adobe Analytics ", "|", "tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", decryptor.decrypt(row.encrypted_value), "|");
     }
+    //adobe analytics cookie
+    else if(row.name.startsWith("everest_")) {
+        console.log("Adobe Analytics ", "|", "tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", decryptor.decrypt(row.encrypted_value), "|");
+    }
 
     //Siebel cookie
-    else if(row.name.startsWith("_sn")) {
+    else if(row.name == "_sn") {
         console.log("Oracle (Siebel) ", "|", "tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", decryptor.decrypt(row.encrypted_value), "|");
     }
+    //Rakuten Marketing cookie
+    else if(row.name == "rat_v") {
+        console.log("Rakuten Marketing", "|", "tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", decryptor.decrypt(row.encrypted_value), "|");
+    }
+
+    //Rakuten Marketing cookie
+    else if(row.name == "Rp") {
+        console.log("Rakuten Marketing ", "|", "tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", decryptor.decrypt(row.encrypted_value), "|");
+    }
+
+
+    /*** NON TRACKING STARTS HERE */
 
     //cloud fare non tracking
     else if(row.name === "__cfduid") {
