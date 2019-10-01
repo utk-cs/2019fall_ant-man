@@ -256,5 +256,30 @@ class ChromeDB {
 
         return rv;
     }
+
+    static deleteCookieLocal(cookie) {
+        var db = new sqlite3(DBLOCAL);
+
+        try {
+            var stmt = db.prepare(
+                "DELETE FROM cookies WHERE " +
+                    "host_key = @host_key AND " +
+                    "name = @name AND " +
+                    "path = @path"
+            );
+            var rv = stmt.run(cookie);
+        } catch {
+            db.close();
+        }
+
+        return rv;
+    }
+
+    static deleteCookie(cookie) {
+        return (
+            this.deleteCookieChrome(cookie),
+            this.deleteCookieLocal(cookie)
+        );
+    }
 }
 ChromeDB.cipher = new cc.ChromeCrypt();
