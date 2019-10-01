@@ -43,3 +43,38 @@ CREATE TABLE cookies(
     samesite: -1
 }
 ```
+
+### Cookie Database Interface
+**Example:**
+```
+// Retrieve a cookie from the db
+
+// Cookies are keyed in the database using a combination of host_key, name, and path.
+// Each of these values on their own do not have to be unique, however they must
+// be in combination.
+var desiredCookie = {
+    host_key: '.fandango.com',
+    name: 'zip',
+    path: '/'
+}
+
+// ChromeDB is a static class
+var retrievedCookie = ChromeDB.getCookie(desiredCookie);
+
+// retrievedCookie now holds an entire cookie object, with all properties
+// shown above. To modify one of the values, it's as simple as this:
+retrievedCookie.creation_utc = 12345;
+
+// Storing this change back into the db:
+var rv = ChromeDB.modifyCookie(retrievedCookie);
+
+// NOTE: You cannot modify the host_key, name, or path using this function.
+// To do that, run this:
+rv = ChromeDB.deleteCookie(retrievedCookie);
+retrievedCookie.name = 'zap';
+rv = ChromeDB.addCookie(retrievedCookie);
+
+// Another NOTE: Do not attempt to modify the encrypted_value property.
+// this is automatically taken care of in the interface.
+// Simply edit the value property.
+```
