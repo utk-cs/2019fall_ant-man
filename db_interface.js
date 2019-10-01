@@ -109,6 +109,63 @@ class ChromeDB {
         return rv;
     }
 
+    static addCookieLocal(cookie) {
+        if (cookie.value.length !== 0) {
+            cookie.encrypted_value = ChromeDB.cipher.encrypt(cookie.value);
+            cookie.value = '';
+        }
+
+        var db = new sqlite3(DBLOCAL);
+
+        try {
+            var stmt = db.prepare(
+                "INSERT INTO cookies (" +
+                    "creation_utc, " +
+                    "host_key, " +
+                    "name, " +
+                    "value, " +
+                    "path, " +
+                    "expires_utc, " +
+                    "is_secure, " +
+                    "is_httponly, " +
+                    "last_access_utc, " +
+                    "has_expires, " +
+                    "is_persistent, " +
+                    "priority, " +
+                    "encrypted_value, " +
+                    "samesite" +
+                ") VALUES (" +
+                    "@creation_utc, " +
+                    "@host_key, " +
+                    "@name, " +
+                    "@value, " +
+                    "@path, " +
+                    "@expires_utc, " +
+                    "@is_secure, " +
+                    "@is_httponly, " +
+                    "@last_access_utc, " +
+                    "@has_expires, " +
+                    "@is_persistent, " +
+                    "@priority, " +
+                    "@encrypted_value, " +
+                    "@samesite" +
+                ")"
+            );
+            var rv = stmt.run(cookie);
+        } catch {
+            db.close();
+        }
+     
+        return rv;
+    }
+
+    static addCookie(cookie) {
+        return (
+            this.addCookieChrome(cookie),
+            this.addCookieLocal(cookie)
+        );
+    }
+
     static modifyCookieChrome(cookie) {
         var db = new sqlite3(DBPATH);
 
