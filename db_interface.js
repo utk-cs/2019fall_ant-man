@@ -199,6 +199,46 @@ class ChromeDB {
         return rv;
     }
 
+    static modifyCookieLocal(cookie) {
+        var db = new sqlite3(DBLOCAL);
+
+        try {
+            var stmt = db.prepare(
+                "UPDATE cookies SET " +
+                    "creation_utc = @creation_utc, " +
+                    "host_key = @host_key, " +
+                    "name = @name, " +
+                    "value = @value, " +
+                    "path = @path, " +
+                    "expires_utc = @expires_utc, " +
+                    "is_secure = @is_secure, " +
+                    "is_httponly = @is_httponly, " +
+                    "last_access_utc = @last_access_utc, " +
+                    "has_expires = @has_expires, " +
+                    "is_persistent = @is_persistent, " +
+                    "priority = @priority, " +
+                    "encrypted_value = @encrypted_value, " +
+                    "samesite = @samesite " +
+                "WHERE " +
+                    "host_key = @host_key AND " +
+                    "name = @name AND " +
+                    "path = @path"
+            );
+            var rv = stmt.run(cookie);
+        } catch {
+            db.close();
+        }
+
+        return rv;
+    }
+
+    static modifyCookie(cookie) {
+        return (
+            this.modifyCookieChrome(cookie),
+            this.modifyCookieLocal(cookie)
+        );
+    }
+
     static deleteCookieChrome(cookie) {
         var db = new sqlite3(DBPATH);
 
