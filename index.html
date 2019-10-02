@@ -194,7 +194,7 @@
               <div class="col-sm detail align-self-center">
                 <b>Host Key</b>
               </div>
-              <div class="col-sm detail align-self-center">
+              <div class="col-sm detail align-self-center" id="host_key">
                 <p>Fandango.com</p>
               </div>
             </div>
@@ -202,7 +202,7 @@
               <div class="col-sm detail align-self-center">
                 <b>Name</b>
               </div>
-              <div class="col-sm detail align-self-center">
+              <div class="col-sm detail align-self-center" id="name">
                 <p>zip</p>
               </div>
             </div>
@@ -210,7 +210,7 @@
               <div class="col-sm detail align-self-center">
                 <b>Creation Time</b>
               </div>
-              <div class="col-sm detail align-self-center">
+              <div class="col-sm detail align-self-center" id="creation_utc">
                 <p>13198689890368478</p>
               </div>
             </div>
@@ -218,7 +218,7 @@
               <div class="col-sm detail align-self-center">
                 <b>Last Used Time</b>
               </div>
-              <div class="col-sm detail align-self-center">
+              <div class="col-sm detail align-self-center" id="last_access_utc">
                 <p>13198690365647604</p>
               </div>
             </div>
@@ -226,7 +226,7 @@
               <div class="col-sm detail align-self-center">
                 <b>Expiration Time</b>
               </div>
-              <div class="col-sm detail align-self-center">
+              <div class="col-sm detail align-self-center" id="expires_utc">
                 <p>13230225890000000</p>
               </div>
             </div>
@@ -234,13 +234,13 @@
               <div class="col-sm detail align-self-center">
                 <b>value</b>
               </div>
-              <div class="col-sm detail align-self-center">
+              <div class="col-sm detail align-self-center" id="value">
                 <p>''</p>
               </div>
               <div class="col-sm detail align-self-center">
                 <b>path</b>
               </div>
-              <div class="col-sm detail align-self-center">
+              <div class="col-sm detail align-self-center" id="path">
                 <p>'/'</p>
               </div>
             </div> 
@@ -248,19 +248,19 @@
               <div class="col-sm detail align-self-center">
                 <b>is_secure</b>
               </div>
-              <div class="col-sm detail align-self-center">
+              <div class="col-sm detail align-self-center" id="is_secure">
                 <p>1</p>
               </div>
               <div class="col-sm detail align-self-center">
                 <b>is_httponly</b>
               </div>
-              <div class="col-sm detail align-self-center">
+              <div class="col-sm detail align-self-center" id="is_httponly">
                 <p>0</p>
               </div>
               <div class="col-sm detail align-self-center">
                 <b>priority</b>
               </div>
-              <div class="col-sm detail align-self-center">
+              <div class="col-sm detail align-self-center" id="priority">
                 <p>1</p>
               </div>
             </div>
@@ -268,19 +268,19 @@
               <div class="col-sm detail align-self-center">
                 <b>samesite</b>
               </div>
-              <div class="col-sm detail align-self-center">
+              <div class="col-sm detail align-self-center" id="samesite">
                 <p>-1</p>
               </div>
               <div class="col-sm detail align-self-center">
                 <b>has_expires</b>
               </div>
-              <div class="col-sm detail align-self-center">
+              <div class="col-sm detail align-self-center" id="has_expires">
                 <p>1</p>
               </div>
               <div class="col-sm detail align-self-center">
                 <b>is_persistent</b>
               </div>
-              <div class="col-sm detail align-self-center">
+              <div class="col-sm detail align-self-center" id="is_persistent">
                 <p>1</p>
               </div>
             </div>
@@ -288,7 +288,7 @@
               <div class="col-sm detail align-self-center dumb">
                 <b>encrypted_value</b>
               </div>
-              <div class="col-sm detail align-self-center dumb">
+              <div class="col-sm detail align-self-center dumb" id="encrypted_value">
                 <p>&lt;Buffer 76 31 30 68 53 3e d1 61 10 31 d2 92 8f 3c 04 93 d8 eb 52&gt;</p>
               </div>
             </div>
@@ -300,9 +300,9 @@
           <div class="col-sm-10">
             <div class="row">
               <div class="btn-group">
-                <button type="button" class="btn btn-danger">Delete Cookie</button>
+                <button type="button" id="Delete" class="btn btn-danger">Delete Cookie</button>
                 <button type="button" class="btn btn-warning">Randomize Cookie</button>
-                <button type="button" class="btn btn-secondary">Something Else to Cookie</button>
+                <button type="button" id="tester" class="btn btn-secondary">Something Else to Cookie</button>
               </div>
             </div>
           </div>
@@ -312,6 +312,7 @@
       </div>
      
     </div>
+    <script src="index.js"></script>
     <script>
       //global.$ = require('jquery/dist/jquery')
       $(document).ready(function () {
@@ -319,6 +320,10 @@
         "scrollX": true,
         "scrollY": 600,
         
+        });
+        $("#tester").click(function(){
+          var cookie = JSON.parse('{"creation_utc": 13198689890368478,"host_key": ".fandango.com","name": "zip","value": "","path": "/","expires_utc": 13230225890000000,"is_secure": 1,"is_httponly": 0,"last_access_utc": 13198690365647604,"has_expires": 1,"is_persistent": 1,"priority": 1,"encrypted_value": "76 31 30 68 53 3e d1 61 10 31 d2 92 8f 3c 04 93 d8 eb 52","samesite": -1}');
+          updateDetailedView(cookie);
         });
       $('.dataTables_length').addClass('bs-select');
       });
@@ -345,10 +350,7 @@
         bottom: .5em;
       }
     </style>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>-->
-  </body>
+
+    
+    </body>
 </html>
