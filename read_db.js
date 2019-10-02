@@ -94,6 +94,20 @@ var cookie_type = (row) => {
     else if(row.name == "Rp") {
         console.log("Rakuten Marketing ", "|", "tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", decryptor.decrypt(row.encrypted_value), "|");
     }
+    
+    //Crazy egg Marketing cookie
+    else if(row.name == "_ceir" || row.name == "_ceg.s" || row.name == "_ceg.u") {
+        console.log("Crazy Egg analytics ", "|", "tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", decryptor.decrypt(row.encrypted_value), "|");
+    }
+
+
+    //Clicky cookie     don't personally have these cookies on my system so someone else has to run this with their cookies
+    else if(row.name == "clicky_custom") {
+        console.log("Clicky ", "|", "tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", decryptor.decrypt(row.encrypted_value), "|");
+    }
+    else if(row.name == "utm_custom" || row.name == "_ceg.s" || row.name == "_ceg.u") {
+        console.log("Crazy Egg analytics ", "|", "tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", decryptor.decrypt(row.encrypted_value), "|");
+    }
 
 
     /*** NON TRACKING STARTS HERE */
