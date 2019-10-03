@@ -25,6 +25,15 @@ db.all(sql, [], (err, rows) => {
         cookie_type(row)
 
     });
+
+
+// var h = Math.floor(d / 3600);
+// const epoch = Date.now();
+// epoch = epoch * .001
+
+// var d = new Date(0);
+// d.setUTCSeconds(utcSeconds);
+// console.log(d)
 });
 
 
@@ -49,7 +58,7 @@ var cookie_type = (row) => {
     }
     //adobe analytics cookie
     else if(row.name === "s_vi") {
-        console.log("Adobe Analytics ", "|", "tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", decryptor.decrypt(row.encrypted_value), "|");
+        console.log("Adobe Analytics ", "|", "tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", row.expires_utc, "|", decryptor.decrypt(row.encrypted_value), "|");
         // console.log(row.name.padEnd(20));
     }
     //adobe analytics cookie
@@ -138,10 +147,20 @@ var cookie_type = (row) => {
     }
     //log everything else as unknown until more research is done
     else {
-        console.log("Unknown ", "|", "Unknown ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", decryptor.decrypt(row.encrypted_value), "|");
-    }
+        var utcSeconds = row.expires_utc;
+        var d = new Date(0);
+        d.setUTCSeconds(utcSeconds);
 
+        if(utcSeconds === 0) {
+            console.log("Unknown ", "|", "non-tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", decryptor.decrypt(row.encrypted_value), "|");
+        }
+        else {
+            console.log("Unknown ", "|", "Unknown ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", decryptor.decrypt(row.encrypted_value), "|");
+        }
+    }
 }
+
+
 
 
 // close the db
