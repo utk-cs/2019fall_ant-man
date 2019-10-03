@@ -44,7 +44,7 @@ var cookie_type = (row) => {
 
     //Google analytics - tracking
     if(row.name === "_ga" || row.name === "__utma" || row.name === "__utmz" || row.name === "_gcl_au") {
-        console.log("Google Analytics ", "|", "tracking ","|",row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", row.expires_utc, "|", decryptor.decrypt(row.encrypted_value), "|");
+        console.log("Google Analytics ", "|", "tracking ","|",row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", row.is_persistent, "|", decryptor.decrypt(row.encrypted_value), "|");
     }
 
     //quantcast tracking
@@ -58,7 +58,7 @@ var cookie_type = (row) => {
     }
     //adobe analytics cookie
     else if(row.name === "s_vi") {
-        console.log("Adobe Analytics ", "|", "tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", row.expires_utc, "|", decryptor.decrypt(row.encrypted_value), "|");
+        console.log("Adobe Analytics ", "|", "tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", row.row.is_persistent, "|", decryptor.decrypt(row.encrypted_value), "|");
         // console.log(row.name.padEnd(20));
     }
     //adobe analytics cookie
@@ -123,7 +123,7 @@ var cookie_type = (row) => {
 
     //cloud fare non tracking
     else if(row.name === "__cfduid") {
-        console.log("Cloudflare ", "|", "non-tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", row.expires_utc, "|", decryptor.decrypt(row.encrypted_value), "|");
+        console.log("Cloudflare ", "|", "non-tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", row.is_persistent, "|", decryptor.decrypt(row.encrypted_value), "|");
     }
     //Google analytics non tracking (surprising I know)
     else if(row.name === "__utmb" || row.name === "__utmv") {
@@ -135,7 +135,7 @@ var cookie_type = (row) => {
     }
     //keeps track of J2EE sessions - non-tracking
     else if(row.name === "JSESSIONID") {
-        console.log("J2EE Server Indicator ", "|", "non-tracking ","|",row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", row.expires_utc, "|", decryptor.decrypt(row.encrypted_value), "|");
+        console.log("J2EE Server Indicator ", "|", "non-tracking ","|",row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", row.is_persistent, "|", decryptor.decrypt(row.encrypted_value), "|");
     }
     //sticky session cookie - used for optmizing and improving user experience.
     else if(row.name === "PLAY_SESSION") {
@@ -151,7 +151,7 @@ var cookie_type = (row) => {
         var d = new Date(0);
         d.setUTCSeconds(utcSeconds);
 
-        if(utcSeconds === 0) {
+        if(row.has_expires === 0 || row.is_persistent == 0) {
             console.log("Unknown ", "|", "non-tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", decryptor.decrypt(row.encrypted_value), "|");
         }
         else {
