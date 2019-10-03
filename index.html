@@ -9,6 +9,15 @@
       window.$ = window.jQuery = require('jquery');
       window.Bootstrap = require('bootstrap');
       require( 'datatables.net-bs4' )();
+      
+      const db = new Database('cookies.db', { verbose: console.log });
+      var sql = 'CREATE TABLE cookies(creation_utc INTEGER NOT NULL,host_key TEXT NOT NULL,name TEXT NOT NULL,value TEXT NOT NULL,path TEXT NOT NULL,expires_utc INTEGER NOT NULL,is_secure INTEGER NOT NULL,is_httponly INTEGER NOT NULL,last_access_utc INTEGER NOT NULL,has_expires INTEGER NOT NULL DEFAULT 1,is_persistent INTEGER NOT NULL DEFAULT 1,priority INTEGER NOT NULL DEFAULT 1,encrypted_value BLOB DEFAULT \'\',samesite INTEGER NOT NULL DEFAULT -1,UNIQUE (host_key, name, path))';
+      var sql2 = 'INSERT INTO cookies (creation_utc, host_key, name, value, path, expires_utc, is_secure, is_httponly, last_access_utc) VALUES (1, "hello", "hello", "hello", "hello", 1, 1, 1, 1)'
+      var sql3 = 'SELECT host_key Name FROM cookies'
+      console.log(db.exec(sql1));
+      console.log(db.exec(sql2));
+      var host_key = console.log(db.exec(sql3));
+      document.getElementById('message').innerHTML = host_key;
     </script>
     
     <!-- Bootstrap CSS -->
@@ -100,7 +109,8 @@
                 <td>g.winters@datatables.net</td>
               </tr>
               <tr>
-                <td>Ashton</td>
+                <!-- <td>Ashton</td> -->
+                <td><p id='message'></p></td>
                 <td>Cox</td>
                 <td>Junior Technical Author</td>
                 <td>San Francisco</td>
@@ -185,7 +195,8 @@
           <div class="col-sm-10" style="background-color:rgb(200, 200, 200);">
             <div class="row equal">
               <div class="col-sm align-self-stretch detail">
-                <b>Host Key</b>
+                <!-- <p id='message'></p> -->
+                <b>host_key</b>
               </div>
               <div class="col-sm detail align-self-stretch" id="host_key">
                 <p>Fandango.com</p>
