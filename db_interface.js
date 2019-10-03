@@ -26,6 +26,7 @@ class ChromeDB {
             db.close();
         }
 
+        db.close();
         return rv;
     }
 
@@ -44,6 +45,7 @@ class ChromeDB {
             db.close();
         }
 
+        db.close();
         return rv;
     }
 
@@ -106,6 +108,7 @@ class ChromeDB {
             db.close();
         }
      
+        db.close();
         return rv;
     }
 
@@ -156,6 +159,7 @@ class ChromeDB {
             db.close();
         }
      
+        db.close();
         return rv;
     }
 
@@ -196,6 +200,7 @@ class ChromeDB {
             db.close();
         }
 
+        db.close();
         return rv;
     }
 
@@ -229,6 +234,7 @@ class ChromeDB {
             db.close();
         }
 
+        db.close();
         return rv;
     }
 
@@ -254,6 +260,7 @@ class ChromeDB {
             db.close();
         }
 
+        db.close();
         return rv;
     }
 
@@ -272,6 +279,7 @@ class ChromeDB {
             db.close();
         }
 
+        db.close();
         return rv;
     }
 
@@ -397,6 +405,24 @@ class ChromeDB {
             dblocal.close();
         }
 
+        db.close();
+        dblocal.close();
+        return rv;
+    }
+
+    static listCookies() {
+        var db = new sqlite3(DBLOCAL);
+        var rv;
+
+        try {
+            var stmt = db.prepare("SELECT * FROM cookies");
+            
+            rv = stmt.all();
+        } catch(err) {
+            db.close();
+        }
+
+        db.close();
         return rv;
     }
 }
