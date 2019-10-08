@@ -36,3 +36,9 @@ db.close((err) => {
     }
     console.log('Close the database connection.');
   });
+
+function callSql(string) {
+  console.log(string);
+  return string;
+}
+module.exports = {callSql};
