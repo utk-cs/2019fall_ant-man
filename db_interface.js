@@ -427,3 +427,7 @@ class ChromeDB {
     }
 }
 ChromeDB.cipher = new cc.ChromeCrypt();
+
+module.exports = {
+    ChromeDB
+}
