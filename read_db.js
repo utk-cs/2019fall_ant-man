@@ -23,6 +23,7 @@ db.all(sql, [], (err, rows) => {
     rows.forEach((row) => {
         // console.log("|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", decryptor.decrypt(row.encrypted_value), "|");
         cookie_type(row)
+        // console.log(row)
 
     });
 
@@ -45,6 +46,7 @@ var cookie_type = (row) => {
     //Google analytics - tracking
     if(row.name === "_ga" || row.name === "__utma" || row.name === "__utmz" || row.name === "_gcl_au") {
         console.log("Google Analytics ", "|", "tracking ","|",row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", row.is_persistent, "|", decryptor.decrypt(row.encrypted_value), "|");
+        return "worked";
     }
 
     //quantcast tracking
@@ -58,7 +60,7 @@ var cookie_type = (row) => {
     }
     //adobe analytics cookie
     else if(row.name === "s_vi") {
-        console.log("Adobe Analytics ", "|", "tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", row.row.is_persistent, "|", decryptor.decrypt(row.encrypted_value), "|");
+        console.log("Adobe Analytics ", "|", "tracking ","|", row.host_key.padEnd(30), "|", row.name.padEnd(20), "|", row.is_persistent, "|", decryptor.decrypt(row.encrypted_value), "|");
         // console.log(row.name.padEnd(20));
     }
     //adobe analytics cookie
@@ -162,6 +164,7 @@ var cookie_type = (row) => {
 
 
 
+module.exports = cookie_type;
 
 // close the db
 db.close();
