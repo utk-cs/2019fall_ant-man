@@ -5,7 +5,7 @@ console.log("this works");
 
 function updateDetailedView(cookie){
     console.log(cookie);
-    for(var key in cookie) {
+    for(var key in cookie){
         console.log(key);
         console.log(cookie[key]);
         if(cookie[key] === ''){
@@ -15,6 +15,7 @@ function updateDetailedView(cookie){
         }
         $("#"+key).html(htmlstr);
     }
+    return 0; //No error hit
 }
 
 function updateTable() {
@@ -75,3 +76,13 @@ function updateTable() {
     table.append(body);
     console.log("Done");
 }
+
+function modifyCookie(cookie){
+    for(var key in cookie){
+        htmlstr = '<input type="text" class="form-control form-control-lg align-self-stretch" placeholder="' + cookie[key] + '" >';
+        console.log($("#"+key));
+        //$("#"+key).style.padding = 0;
+        $("#"+key).html(htmlstr);
+    }
+}
+
