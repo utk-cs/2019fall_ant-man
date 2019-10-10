@@ -81,9 +81,14 @@ function updateTable() {
 function modifyCookie(cookie){
     if(mode == 0){
         for(var key in cookie){
-            htmlstr = '<input type="text" id="' + key + 'input" class="form-control form-control-lg align-self-stretch" placeholder="' + cookie[key] + '" >';
+            if(key == "expires_utc"){
+                htmlstr = '<input type="date" max="3000-12-31" min="1000-01-01" class="form-control form-control-lg align-self-stretch">';
+                $("#"+key).html(htmlstr);
+            }else{
+                htmlstr = '<input type="text" id="' + key + 'input" class="form-control form-control-lg align-self-stretch" placeholder="' + cookie[key] + '" >';
+                $("#"+key).html(htmlstr);
+            }
             
-            $("#"+key).html(htmlstr);
         }
         document.getElementById("Modify").innerHTML = "Submit";
         mode = 1;
