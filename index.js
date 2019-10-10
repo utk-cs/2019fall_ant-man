@@ -1,3 +1,4 @@
+var mode = 0;
 const DBI = require('./db_interface').ChromeDB;
 const CC = require('./cookie_crypt');
 
@@ -78,11 +79,31 @@ function updateTable() {
 }
 
 function modifyCookie(cookie){
-    for(var key in cookie){
-        htmlstr = '<input type="text" class="form-control form-control-lg align-self-stretch" placeholder="' + cookie[key] + '" >';
-        console.log($("#"+key));
-        //$("#"+key).style.padding = 0;
-        $("#"+key).html(htmlstr);
+    if(mode == 0){
+        for(var key in cookie){
+            htmlstr = '<input type="text" id="' + key + 'input" class="form-control form-control-lg align-self-stretch" placeholder="' + cookie[key] + '" >';
+            
+            $("#"+key).html(htmlstr);
+        }
+        document.getElementById("Modify").innerHTML = "Submit";
+        mode = 1;
+    }else{
+        var newCookie = {};
+        for(var key in cookie){
+            var val = document.getElementById(key + "input").value;
+            if(val === ""){
+                newCookie[key] = cookie[key];
+            }else{
+                newCookie[key] = val;
+            }
+            
+        }
+        updateDetailedView(newCookie);
+        document.getElementById("Modify").innerHTML = "Modify Cookie";
+        mode = 0;
     }
+}
+function submitCookie(){
+
 }
 
