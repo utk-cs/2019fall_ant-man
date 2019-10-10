@@ -5,13 +5,16 @@
 <h2>HTML Buttons</h2>
 <p>HTML buttons are defined with the button tag:</p>
 
-<button id = "button">Click me</button>
+<button  onclick="myFunction()" id = "button">Click me</button>
 <a href="index.html">Go to page</a>
 
 </body>
 </html>
 <script>
-document.getElementById("button").addEventListener("click", function(){
-    <a href="index.html">Go to page</a>
-});
+
+function myFunction() {
+    const { remote } = require('electron')
+    remote.getCurrentWindow().loadURL('https://github.com')
+}
+
 </script>
