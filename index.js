@@ -78,23 +78,39 @@ function updateTable() {
     console.log("Done");
 }
 
+function numToDate(num){
+    var offset = num/1000;
+    var dateOffset = new Date(Date.UTC(1601, 1, 1));
+    return new Date(dateOffset.getTime()+offset);
+}
+
+function dateToNum(date){ 
+    var dateOffset = new Date(Date.UTC(1601, 1, 1));
+    var offset = date.getTime()-dateOffset.getTime();
+    return (offset*1000);
+}
+
 function modifyCookie(cookie){
+    console.log(cookie);
     if(mode == 0){
         for(var key in cookie){
             if(key == "expires_utc"){
-                htmlstr = '<input type="date" max="3000-12-31" min="1000-01-01" class="form-control form-control-lg align-self-stretch">';
-                $("#"+key).html(htmlstr);
+                htmlstr = '<input type="date" id="' + key + 'input" max="3000-12-31" min="1000-01-01" class="form-control form-control-lg align-self-stretch">';
+                console.log(numToDate(cookie[key]));
+                console.log(numToDate(dateToNum(numToDate(cookie[key]))));
+                console.log(dateToNum(numToDate(cookie[key])));
+                console.log(cookie[key]);
             }else{
                 htmlstr = '<input type="text" id="' + key + 'input" class="form-control form-control-lg align-self-stretch" placeholder="' + cookie[key] + '" >';
-                $("#"+key).html(htmlstr);
             }
-            
+            $("#"+key).html(htmlstr);
         }
         document.getElementById("Modify").innerHTML = "Submit";
         mode = 1;
     }else{
         var newCookie = {};
         for(var key in cookie){
+            console.log(key + "input");
             var val = document.getElementById(key + "input").value;
             if(val === ""){
                 newCookie[key] = cookie[key];
@@ -108,6 +124,7 @@ function modifyCookie(cookie){
         mode = 0;
     }
 }
+
 function submitCookie(){
 
 }
