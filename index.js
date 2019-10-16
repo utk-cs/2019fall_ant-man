@@ -93,13 +93,17 @@ function dateToNum(date){
 function modifyCookie(cookie){
     console.log(cookie);
     if(mode == 0){
+        var htmlstr;
         for(var key in cookie){
             if(key == "expires_utc"){
-                htmlstr = '<input type="date" id="' + key + 'input" max="3000-12-31" min="1000-01-01" class="form-control form-control-lg align-self-stretch">';
-                console.log(numToDate(cookie[key]));
-                console.log(numToDate(dateToNum(numToDate(cookie[key]))));
-                console.log(dateToNum(numToDate(cookie[key])));
-                console.log(cookie[key]);
+                var date = numToDate(cookie[key]);
+                htmlstr = '<input type="datetime-local" id="' + key + 'input" min="1601-01-01T00:00" max="3000-01-01T00:00" class="form-control form-control-lg align-self-stretch" value="' + date.toISOString().replace('Z', '') +'">';
+            }else if(key == "creation_utc"){
+                var date = numToDate(cookie[key]);
+                htmlstr = '<input type="datetime-local" id="' + key + 'input" min="1601-01-01T00:00" max="3000-01-01T00:00" class="form-control form-control-lg align-self-stretch" value="' + date.toISOString().replace('Z', '') +'">';
+            }else if(key == "last_access_utc"){
+                var date = numToDate(cookie[key]);
+                htmlstr = '<input type="datetime-local" id="' + key + 'input" min="1601-01-01T00:00" max="3000-01-01T00:00" class="form-control form-control-lg align-self-stretch" value="' + date.toISOString().replace('Z', '') +'">';
             }else{
                 htmlstr = '<input type="text" id="' + key + 'input" class="form-control form-control-lg align-self-stretch" placeholder="' + cookie[key] + '" >';
             }
@@ -110,13 +114,24 @@ function modifyCookie(cookie){
     }else{
         var newCookie = {};
         for(var key in cookie){
-            console.log(key + "input");
             var val = document.getElementById(key + "input").value;
-            if(val === ""){
-                newCookie[key] = cookie[key];
+            if(key == "expires_utc"){
+                var date = new Date(val);
+                newCookie[key] = dateToNum(date);
+            }else if(key == "creation_utc"){
+                var date = new Date(val);
+                newCookie[key] = dateToNum(date);
+            }else if(key == "last_access_utc"){
+                var date = new Date(val);
+                newCookie[key] = dateToNum(date);
             }else{
-                newCookie[key] = val;
+                if(val === ""){
+                    newCookie[key] = cookie[key];
+                }else{
+                    newCookie[key] = val;
+                }
             }
+            
             
         }
         updateDetailedView(newCookie);
