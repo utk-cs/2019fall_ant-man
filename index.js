@@ -64,6 +64,10 @@ function updateTable() {
                     value = cipher.decrypt(cookie["encrypted_value"]);
                 }
             }
+            else if (key == "creation_utc") {
+                value = numToDate(cookie["creation_utc"])
+            }  
+            // console.log("cookie time is: ", numToDate(cookie.creation_utc))
 
             row.append(`<td>${value}</td>`);
         }
@@ -81,7 +85,13 @@ function updateTable() {
 function numToDate(num){
     var offset = num/1000;
     var dateOffset = new Date(Date.UTC(1601, 1, 1));
-    return new Date(dateOffset.getTime()+offset);
+    
+    var simplifiedDate = new Date(dateOffset.getTime()+offset)
+    // v  = simplifiedDate.toISOString()
+
+    return simplifiedDate
+    // return simplifiedDate.toISOString()
+    // return new Date(dateOffset.getTime()+offset);
 }
 
 function dateToNum(date){ 
