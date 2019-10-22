@@ -6,13 +6,27 @@ console.log("this works");
 
 function updateDetailedView(cookie){
     console.log(cookie);
-    for(var key in cookie){
+    var cipher = new CC.ChromeCrypt();
+    for (var key in cookie) {
+        if (key === "encrypted_value") {
+            continue;
+        }
+        
+        value = cookie[key];
+        if (key === "value") {
+            if (cookie["encrypted_value"] !== null) {
+                value = cipher.decrypt(cookie["encrypted_value"]);
+            }
+        } else if (key == "creation_utc") {
+            value = numToDate(cookie["creation_utc"])
+        }
+
         console.log(key);
-        console.log(cookie[key]);
-        if(cookie[key] === ''){
+        console.log(value);
+        if(value === ''){
             htmlstr = "<p>" + "''" + "</p>";
         }else{
-            htmlstr = "<p>" + cookie[key] + "</p>";
+            htmlstr = "<p>" + value + "</p>";
         }
         $("#"+key).html(htmlstr);
     }

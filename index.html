@@ -252,7 +252,7 @@
   
 
     <script>
-      global.$ = require('jquery/dist/jquery')
+      global.$ = require('jquery/dist/jquery');
       $(document).ready(function () {
         $("#Modify").click(function(){
           var cookie = JSON.parse('{"creation_utc": 13198689890368478,"host_key": ".fandango.com","name": "zip","value": "","path": "/","expires_utc": 13230225890000000,"is_secure": 1,"is_httponly": 0,"last_access_utc": 13198690365647604,"has_expires": 1,"is_persistent": 1,"priority": 1,"encrypted_value": "76 31 30 68 53 3e d1 61 10 31 d2 92 8f 3c 04 93 d8 eb 52","samesite": -1}');
@@ -268,11 +268,16 @@
 
 
         
-        table.on( 'select', function () {
-          var rowData = table.rows( { selected: true } ).data()[0][1];
-          console.log(rowData)
-          alert(rowData)
-          } );
+        table.on('select', function () {
+          var rowData = table.rows({selected: true}).data()[0];
+          var cookieID = {
+            host_key: rowData[1],
+            name: rowData[2],
+            path: rowData[4]
+          };
+          var cookie = DBI.getCookie(cookieID);
+          updateDetailedView(cookie);
+        });
         // $("#tester").click(function(){
         //   var cookie = JSON.parse('{"creation_utc": 13198689890368478,"host_key": ".fandango.com","name": "zip","value": "","path": "/","expires_utc": 13230225890000000,"is_secure": 1,"is_httponly": 0,"last_access_utc": 13198690365647604,"has_expires": 1,"is_persistent": 1,"priority": 1,"encrypted_value": "76 31 30 68 53 3e d1 61 10 31 d2 92 8f 3c 04 93 d8 eb 52","samesite": -1}');
         //   updateDetailedView(cookie);
