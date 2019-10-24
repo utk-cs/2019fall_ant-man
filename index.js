@@ -1,10 +1,13 @@
 var mode = 0;
+var globalCookie ; // cookie to store the present cookie being shown on the detailed view
+var oldCookie; //Copy of cookie before modification. 
 const DBI = require('./db_interface').ChromeDB;
 const CC = require('./cookie_crypt');
 
 console.log("this works");
 
 function updateDetailedView(cookie){
+    globalCookie = cookie;
     console.log(cookie);
     var cipher = new CC.ChromeCrypt();
     for (var key in cookie) {
@@ -114,53 +117,56 @@ function dateToNum(date){
     return (offset*1000);
 }
 
-function modifyCookie(cookie){
-    console.log(cookie);
-    if(mode == 0){
-        var htmlstr;
-        for(var key in cookie){
-            if(key == "expires_utc"){
-                var date = numToDate(cookie[key]);
-                htmlstr = '<input type="datetime-local" id="' + key + 'input" min="1601-01-01T00:00" max="3000-01-01T00:00" class="form-control form-control-lg align-self-stretch" value="' + date.toISOString().replace('Z', '') +'">';
-            }else if(key == "creation_utc"){
-                var date = numToDate(cookie[key]);
-                htmlstr = '<input type="datetime-local" id="' + key + 'input" min="1601-01-01T00:00" max="3000-01-01T00:00" class="form-control form-control-lg align-self-stretch" value="' + date.toISOString().replace('Z', '') +'">';
-            }else if(key == "last_access_utc"){
-                var date = numToDate(cookie[key]);
-                htmlstr = '<input type="datetime-local" id="' + key + 'input" min="1601-01-01T00:00" max="3000-01-01T00:00" class="form-control form-control-lg align-self-stretch" value="' + date.toISOString().replace('Z', '') +'">';
-            }else{
-                htmlstr = '<input type="text" id="' + key + 'input" class="form-control form-control-lg align-self-stretch" placeholder="' + cookie[key] + '" >';
-            }
-            $("#"+key).html(htmlstr);
-        }
-        document.getElementById("Modify").innerHTML = "Submit";
-        mode = 1;
-    }else{
-        var newCookie = {};
-        for(var key in cookie){
-            var val = document.getElementById(key + "input").value;
-            if(key == "expires_utc"){
-                var date = new Date(val);
-                newCookie[key] = dateToNum(date);
-            }else if(key == "creation_utc"){
-                var date = new Date(val);
-                newCookie[key] = dateToNum(date);
-            }else if(key == "last_access_utc"){
-                var date = new Date(val);
-                newCookie[key] = dateToNum(date);
-            }else{
-                if(val === ""){
-                    newCookie[key] = cookie[key];
+function modifyCookie(){
+    if(globalCookie != undefined){
+        if(mode == 0){
+            var htmlstr;
+            for(var key in globalCookie){
+                if(key == "expires_utc"){
+                    var date = numToDate(globalCookie[key]);
+                    htmlstr = '<input type="datetime-local" id="' + key + 'input" min="1601-01-01T00:00" max="3000-01-01T00:00" class="form-control form-control-lg align-self-stretch" value="' + date.toISOString().replace('Z', '') +'">';
+                }else if(key == "creation_utc"){
+                    var date = numToDate(globalCookie[key]);
+                    htmlstr = '<input type="datetime-local" id="' + key + 'input" min="1601-01-01T00:00" max="3000-01-01T00:00" class="form-control form-control-lg align-self-stretch" value="' + date.toISOString().replace('Z', '') +'">';
+                }else if(key == "last_access_utc"){
+                    var date = numToDate(globalCookie[key]);
+                    htmlstr = '<input type="datetime-local" id="' + key + 'input" min="1601-01-01T00:00" max="3000-01-01T00:00" class="form-control form-control-lg align-self-stretch" value="' + date.toISOString().replace('Z', '') +'">';
                 }else{
-                    newCookie[key] = val;
+                    htmlstr = '<input type="text" id="' + key + 'input" class="form-control form-control-lg align-self-stretch" placeholder="' + globalCookie[key] + '" >';
                 }
+                $("#"+key).html(htmlstr);
             }
-            
-            
+            document.getElementById("Modify").innerHTML = "Submit";
+            mode = 1;
+        }else{
+            var newCookie = {};
+            for(var key in globalCookie){
+                var val = document.getElementById(key + "input").value;
+                if(key == "expires_utc"){
+                    var date = new Date(val);
+                    newCookie[key] = dateToNum(date);
+                }else if(key == "creation_utc"){
+                    var date = new Date(val);
+                    newCookie[key] = dateToNum(date);
+                }else if(key == "last_access_utc"){
+                    var date = new Date(val);
+                    newCookie[key] = dateToNum(date);
+                }else{
+                    if(val === ""){
+                        newCookie[key] = cookie[key];
+                    }else{
+                        newCookie[key] = val;
+                    }
+                }
+                
+                
+            }
+            oldCookie = globalCookie;
+            updateDetailedView(newCookie);
+            globalCookie = newCookie;
+            document.getElementById("Modify").innerHTML = "Modify Cookie";
+            mode = 0;
         }
-        updateDetailedView(newCookie);
-        document.getElementById("Modify").innerHTML = "Modify Cookie";
-        mode = 0;
     }
 }
 
