@@ -65,18 +65,20 @@
       
       <!-- href contains a where the link goes to -->
       <ul class="navbar-nav">
-        <li class="nav-item active">
+        <!-- <li class="nav-item active">
           <a class="nav-link" href="sample.html">Active</a>
+        </li> -->
+        <li class="nav-item">
+            <div id="button">
+          <a class="nav-link" href="learn_more.html">Learn More</a>
+            </div>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="https://github.com/utk-cs/2019fall_ant-man/blob/master/README.md" target="_blank">Read ME</a>
+          <a class="nav-link" href="https://github.com/utk-cs/2019fall_ant-man/blob/master/README.md" target="_blank">Read Me</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link disabled" href="#">Disabled</a>
-        </li>
+        </li> -->
       </ul>
     </nav>
   </head>
@@ -318,11 +320,11 @@
   
 
     <script>
-      global.$ = require('jquery/dist/jquery')
+      global.$ = require('jquery/dist/jquery');
       $(document).ready(function () {
         $("#Modify").click(function(){
           var cookie = JSON.parse('{"creation_utc": 13198689890368478,"host_key": ".fandango.com","name": "zip","value": "","path": "/","expires_utc": 13230225890000000,"is_secure": 1,"is_httponly": 0,"last_access_utc": 13198690365647604,"has_expires": 1,"is_persistent": 1,"priority": 1,"encrypted_value": "76 31 30 68 53 3e d1 61 10 31 d2 92 8f 3c 04 93 d8 eb 52","samesite": -1}');
-          modifyCookie(cookie);
+          modifyCookie();
         });
         updateTable();
         
@@ -334,11 +336,16 @@
 
 
         
-        table.on( 'select', function () {
-          var rowData = table.rows( { selected: true } ).data()[0][1];
-          console.log(rowData)
-          alert(rowData)
-          } );
+        table.on('select', function () {
+          var rowData = table.rows({selected: true}).data()[0];
+          var cookieID = {
+            host_key: rowData[1],
+            name: rowData[2],
+            path: rowData[4]
+          };
+          var cookie = DBI.getCookie(cookieID);
+          updateDetailedView(cookie);
+        });
         // $("#tester").click(function(){
         //   var cookie = JSON.parse('{"creation_utc": 13198689890368478,"host_key": ".fandango.com","name": "zip","value": "","path": "/","expires_utc": 13230225890000000,"is_secure": 1,"is_httponly": 0,"last_access_utc": 13198690365647604,"has_expires": 1,"is_persistent": 1,"priority": 1,"encrypted_value": "76 31 30 68 53 3e d1 61 10 31 d2 92 8f 3c 04 93 d8 eb 52","samesite": -1}');
         //   updateDetailedView(cookie);
