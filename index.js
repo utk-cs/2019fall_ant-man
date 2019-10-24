@@ -6,10 +6,35 @@ const CC = require('./cookie_crypt');
 
 console.log("this works");
 
+const NAMES = {
+    'creation_utc': 'Creation Time',
+    'host_key': 'Website',
+    'name': 'Name',
+    'value': 'Value',
+    'path': 'Path',
+    'expires_utc': 'Expiration Time',
+    'is_secure': 'Is Secure',
+    'is_httponly': 'Is Httponly',
+    'last_access_utc': 'Last Access Time',
+    'has_expires': 'Has Expires',
+    'is_persistent': 'Is Persistent',
+    'priority': 'Priority',
+    'samesite': 'Samesite'
+};
+
 function updateDetailedView(cookie){
     globalCookie = cookie;
     console.log(cookie);
     var cipher = new CC.ChromeCrypt();
+    var table = $("#detailedView");
+    var heading =
+        "<thead>" +
+            "<tr>" +
+                "<th scope=\"col\">Key</th>" + 
+                "<th scope=\"col\">Value</th>" +
+            "</tr>" +
+        "</thead>";
+    var body = $("<tbody></tbody>");
     for (var key in cookie) {
         if (key === "encrypted_value") {
             continue;
@@ -27,12 +52,18 @@ function updateDetailedView(cookie){
         console.log(key);
         console.log(value);
         if(value === ''){
-            htmlstr = "<p>" + "''" + "</p>";
-        }else{
-            htmlstr = "<p>" + value + "</p>";
+            htmlstr = `<tr><td>${NAMES[key]}</td><td>''</td></tr>`;
+        } else {
+            htmlstr = `<tr><td>${NAMES[key]}</td><td>${value}</td></tr>`;
         }
-        $("#"+key).html(htmlstr);
+        
+        body.append(htmlstr);
     }
+
+    table.empty();
+    table.append(heading);
+    table.append(body);
+
     return 0; //No error hit
 }
 
