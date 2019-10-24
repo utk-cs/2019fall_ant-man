@@ -87,6 +87,9 @@ function updateTable() {
             else if(key == "expires_utc")  {
                 value = numToDate(cookie["expires_utc"])
             }
+            else if(key == "last_access_utc")  {
+                value = numToDate(cookie["last_access_utc"])
+            }
            
 
             row.append(`<td>${value}</td>`);
