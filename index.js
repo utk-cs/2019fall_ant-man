@@ -83,8 +83,11 @@ function updateTable() {
             }
             else if (key == "creation_utc") {
                 value = numToDate(cookie["creation_utc"])
-            }  
-            // console.log("cookie time is: ", numToDate(cookie.creation_utc))
+            }
+            else if(key == "expires_utc")  {
+                value = numToDate(cookie["expires_utc"])
+            }
+           
 
             row.append(`<td>${value}</td>`);
         }
