@@ -9,7 +9,6 @@
       window.$ = window.jQuery = require('jquery');
       window.Bootstrap = require('bootstrap');
       require( 'datatables.net-bs4' )();
-      
       const db = new Database('cookies.db', { verbose: console.log });
       var sql = 'CREATE TABLE cookies(creation_utc INTEGER NOT NULL,host_key TEXT NOT NULL,name TEXT NOT NULL,value TEXT NOT NULL,path TEXT NOT NULL,expires_utc INTEGER NOT NULL,is_secure INTEGER NOT NULL,is_httponly INTEGER NOT NULL,last_access_utc INTEGER NOT NULL,has_expires INTEGER NOT NULL DEFAULT 1,is_persistent INTEGER NOT NULL DEFAULT 1,priority INTEGER NOT NULL DEFAULT 1,encrypted_value BLOB DEFAULT \'\',samesite INTEGER NOT NULL DEFAULT -1,UNIQUE (host_key, name, path))';
       var sql2 = 'INSERT INTO cookies (creation_utc, host_key, name, value, path, expires_utc, is_secure, is_httponly, last_access_utc) VALUES (1, "hello", "hello", "hello", "hello", 1, 1, 1, 1)'
@@ -167,55 +166,55 @@
                 </tr>
                 <tr>
                   <td>Cookie Name: </td>
-                  <td>Thornton</td>
+                  <td id="name">Thornton</td>
                 </tr>
                 <tr>
                   <td>Creation Time: </td>
-                  <td>the Bird</td>
+                  <td id="creation_utc">the Bird</td>
                 </tr>
                 <tr>
                   <td>Last Used Time: </td>
-                  <td>Thornton</td>
+                  <td id="last_access_utc">Thornton</td>
                 </tr>
                 <tr>
                   <td>Expiration Time: </td>
-                  <td>Thornton</td>
+                  <td id="expires_utc">Thornton</td>
                 </tr>
                 <tr>
                   <td>Cookie Value : </td>
-                  <td>Thornton</td>
+                  <td id="value">Thornton</td>
                 </tr>
                 <tr>
                   <td>Cookie Path : </td>
-                  <td>Thornton</td>
+                  <td id="path">Thornton</td>
                 </tr>
                 <tr>
                   <td>Is Secure : </td>
-                  <td>Thornton</td>
+                  <td id="is_secure">Thornton</td>
                 </tr>
                 <tr>
                   <td>Is httponly : </td>
-                  <td>Thornton</td>
+                  <td id="is_httponly">Thornton</td>
                 </tr>
                 <tr>
                   <td>Cookie Priority : </td>
-                  <td>Thornton</td>
+                  <td id="priority">Thornton</td>
                 </tr>
                 <tr>
                   <td>Samesite Value : </td>
-                  <td>Thornton</td>
+                  <td id="samesite">Thornton</td>
                 </tr>
                 <tr>
                   <td>Has Expirtation Date : </td>
-                  <td>Thornton</td>
+                  <td id="has_expires">Thornton</td>
                 </tr>
                 <tr>
                   <td>Is Persistent : </td>
-                  <td>Thornton</td>
+                  <td id="is_persistent">Thornton</td>
                 </tr>
                 <tr>
                   <td>Cookie Encrypted Value : </td>
-                  <td>Thornton</td>
+                  <td id="encrypted_value">Thornton</td>
                 </tr>
               </tbody>
             </table>
