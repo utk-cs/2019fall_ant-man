@@ -23,7 +23,6 @@ const NAMES = {
 };
 
 function updateDetailedView(cookie){
-    globalCookie = cookie;
     console.log(cookie);
     var cipher = new CC.ChromeCrypt();
     var table = $("#detailedView");
@@ -44,6 +43,8 @@ function updateDetailedView(cookie){
         if (key === "value") {
             if (cookie["encrypted_value"] !== null) {
                 value = cipher.decrypt(cookie["encrypted_value"]);
+                cookie.value = value;
+                cookie.encrypted_value = null;
             }
         } else if (key == "creation_utc") {
             value = numToDate(cookie["creation_utc"])
@@ -52,13 +53,15 @@ function updateDetailedView(cookie){
         console.log(key);
         console.log(value);
         if(value === ''){
-            htmlstr = `<tr><td>${NAMES[key]}</td><td>''</td></tr>`;
+            htmlstr = `<tr><td>${NAMES[key]}</td><td id='${key}'>''</td></tr>`;
         } else {
-            htmlstr = `<tr><td>${NAMES[key]}</td><td>${value}</td></tr>`;
+            htmlstr = `<tr><td>${NAMES[key]}</td><td id='${key}'>${value}</td></tr>`;
         }
         
         body.append(htmlstr);
     }
+
+    globalCookie = cookie;
 
     table.empty();
     table.append(heading);
@@ -156,7 +159,7 @@ function dateToNum(date){
 
 function modifyCookie(){
     if(globalCookie != undefined){
-        if(mode == 0){
+        if(mode === 0){
             var htmlstr;
             for(var key in globalCookie){
                 if(key == "expires_utc"){
@@ -178,7 +181,13 @@ function modifyCookie(){
         }else{
             var newCookie = {};
             for(var key in globalCookie){
-                var val = document.getElementById(key + "input").value;
+                console.log(key+"input");
+                var val = document.getElementById(key + "input");
+                if (val === null) {
+                    continue;
+                } else {
+                    val = val.value;
+                }
                 if(key == "expires_utc"){
                     var date = new Date(val);
                     newCookie[key] = dateToNum(date);
@@ -190,17 +199,30 @@ function modifyCookie(){
                     newCookie[key] = dateToNum(date);
                 }else{
                     if(val === ""){
-                        newCookie[key] = cookie[key];
+                        newCookie[key] = globalCookie[key];
                     }else{
                         newCookie[key] = val;
                     }
                 }
                 
-                
+                newCookie["encrypted_value"] = null;
             }
+
             oldCookie = globalCookie;
             updateDetailedView(newCookie);
             globalCookie = newCookie;
+
+            if (
+                oldCookie.host_key === newCookie.host_key &&
+                oldCookie.name === newCookie.name &&
+                oldCookie.path === newCookie.path
+            ) {
+                DBI.modifyCookie(newCookie);
+            } else {
+                DBI.deleteCookie(oldCookie);
+                DBI.addCookie(newCookie);
+            }
+
             document.getElementById("Modify").innerHTML = "Modify Cookie";
             mode = 0;
         }
