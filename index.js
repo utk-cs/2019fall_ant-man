@@ -277,10 +277,14 @@ function randomCookie () {
     var expires_utc = makeExpiresTime();
     var is_secure = Math.floor((Math.random() * 2));
     var is_httponly = Math.floor((Math.random() * 2));
-    var last_access_utc = creation_utc + Math.floor((Math.random() * 1000));
+    var last_access_utc = parseInt(creation_utc,10) + Math.floor((Math.random() * 1000));
     var has_expires = Math.floor((Math.random() * 2));
     var is_persistent = Math.floor((Math.random() * 2));
     var priority = Math.floor((Math.random() * 2));
     var encrypted_value = makeRandomStr(25);
     var samesite = Math.floor((Math.random() * 2));
 }
+
+var creation_utc = makeCreationTime();
+var x = parseInt(creation_utc,10) + Math.floor((Math.random() * 1000));
+console.log (x);
