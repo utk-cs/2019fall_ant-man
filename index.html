@@ -329,7 +329,7 @@
             <div class="row">
               <div class="btn-group">
                 <button type="button" id="Delete" class="btn btn-danger">Delete Cookie</button>
-                <button type="button" class="btn btn-warning">Randomize Cookie</button>
+                <button type="button" id="Randomize" class="btn btn-warning">Randomize Cookie</button>
                 <button type="button" id="Modify" class="btn btn-secondary">Modify Cookie</button>
               </div>
             </div>
@@ -362,6 +362,10 @@
         $("#Modify").click(function(){
           var cookie = JSON.parse('{"creation_utc": 13198689890368478,"host_key": ".fandango.com","name": "zip","value": "","path": "/","expires_utc": 13230225890000000,"is_secure": 1,"is_httponly": 0,"last_access_utc": 13198690365647604,"has_expires": 1,"is_persistent": 1,"priority": 1,"encrypted_value": "76 31 30 68 53 3e d1 61 10 31 d2 92 8f 3c 04 93 d8 eb 52","samesite": -1}');
           modifyCookie();
+        });
+
+        $("#Randomize").click(function(){
+          randomizeCookie();
         });
 
         setTimeout(() => {

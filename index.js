@@ -268,21 +268,42 @@ function makeExpiresTime() {
     return result;
 }
 
-function randomCookie () {
-    var creation_utc = makeCreationTime();
-    var host_key = makeRandomStr(15);
-    var name = makeRandomStr(10);
-    var value = makeRandomStr(10);
-    var path = '/';
-    var expires_utc = makeExpiresTime();
-    var is_secure = Math.floor((Math.random() * 2));
-    var is_httponly = Math.floor((Math.random() * 2));
-    var last_access_utc = parseInt(creation_utc,10) + Math.floor((Math.random() * 1000));
-    var has_expires = Math.floor((Math.random() * 2));
-    var is_persistent = Math.floor((Math.random() * 2));
-    var priority = Math.floor((Math.random() * 2));
-    var encrypted_value = makeRandomStr(25);
-    var samesite = Math.floor((Math.random() * 2));
+function randomCookie(cookie) {
+    cookie.creation_utc = makeCreationTime();
+    //cookie.host_key = makeRandomStr(15);
+    //cookie.name = makeRandomStr(10);
+    cookie.value = makeRandomStr(10);
+    //cookie.path = '/';
+    cookie.expires_utc = makeExpiresTime();
+    cookie.is_secure = Math.floor((Math.random() * 2));
+    cookie.is_httponly = Math.floor((Math.random() * 2));
+    cookie.last_access_utc = parseInt(creation_utc,10) + Math.floor((Math.random() * 1000));
+    cookie.has_expires = Math.floor((Math.random() * 2));
+    cookie.is_persistent = Math.floor((Math.random() * 2));
+    cookie.priority = Math.floor((Math.random() * 2));
+    //cookie.encrypted_value = makeRandomStr(25);
+    cookie.samesite = Math.floor((Math.random() * 2));
+
+    return cookie;
+}
+
+function randomizeCookie() {
+    newCookie = randomCookie(globalCookie);
+
+    oldCookie = globalCookie;
+    updateDetailedView(newCookie);
+    globalCookie = newCookie;
+
+    if (
+        oldCookie.host_key === newCookie.host_key &&
+        oldCookie.name === newCookie.name &&
+        oldCookie.path === newCookie.path
+    ) {
+        DBI.modifyCookie(newCookie);
+    } else {
+        DBI.deleteCookie(oldCookie);
+        DBI.addCookie(newCookie);
+    }
 }
 
 var creation_utc = makeCreationTime();
