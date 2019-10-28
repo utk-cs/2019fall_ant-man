@@ -233,5 +233,54 @@ function submitCookie(){
 
 }
 
-var x = Math.floor((Math.random() * 10) + 1);
-console.log(x);
+//reusued stack overflow snippet
+function makeRandomStr(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+       result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
+
+//make creation time
+function makeCreationTime() {
+    length = 10;
+    var result           = '1319869';
+    var characters       = '0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+       result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
+
+//make expires time
+function makeExpiresTime() {
+    length = 14;
+    var result           = '132';
+    var characters       = '0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+       result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
+
+function randomCookie () {
+    var creation_utc = makeCreationTime();
+    var host_key = makeRandomStr(15);
+    var name = makeRandomStr(10);
+    var value = makeRandomStr(10);
+    var path = '/';
+    var expires_utc = makeExpiresTime();
+    var is_secure = Math.floor((Math.random() * 2));
+    var is_httponly = Math.floor((Math.random() * 2));
+    var last_access_utc = creation_utc + Math.floor((Math.random() * 1000));
+    var has_expires = Math.floor((Math.random() * 2));
+    var is_persistent = Math.floor((Math.random() * 2));
+    var priority = Math.floor((Math.random() * 2));
+    var encrypted_value = makeRandomStr(25);
+    var samesite = Math.floor((Math.random() * 2));
+}
