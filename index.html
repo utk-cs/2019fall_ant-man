@@ -40,6 +40,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
     <title>Cookie Monsterrr</title>
     <style>
+      body {
+        overflow: hidden;
+      }
+
       .vertScrollbar {
       position: relative;
       height: 800px;
@@ -116,234 +120,23 @@
           </table>
         </div>
       </div>
-      
-      <div class="col-sm-6">
-        <!--<div class="row">
-          <div class="col-sm-1"></div>
-          <div class="col-sm-5">
-            <div class="row">
-              <div class="checkbox">
-                  <label><input type="checkbox" value="">Option 1</label>
-              </div>
-              <div class="checkbox">
-                  <label><input type="checkbox" value="">Option 2</label>
-              </div>
-              <div class="checkbox">
-                  <label><input type="checkbox" value="">Option 3</label>
-              </div>
-              <div class="checkbox">
-                  <label><input type="checkbox" value="">Option 4</label>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-5">  
-            <div class="form-group">
-              <label for="sel1">Select list:</label>
-              <select class="form-control" id="sel1">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-sm-1"></div>
-        </div>-->
+      <div class="col-sm-6" style="overflow-x: auto;">
         <div class="row">
-          <div class="col-sm-1"></div>
-          <!-- <div class="col-sm-10" style="background-color:rgb(200, 200, 200);"> -->
-            <table id="detailedView" class="table table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">Key</th>
-                  <th scope="col">Value</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Host Key: </td>
-                  <td>Value</td>
-                </tr>
-                <tr>
-                  <td>Cookie Name: </td>
-                  <td id="name">Thornton</td>
-                </tr>
-                <tr>
-                  <td>Creation Time: </td>
-                  <td id="creation_utc">the Bird</td>
-                </tr>
-                <tr>
-                  <td>Last Used Time: </td>
-                  <td id="last_access_utc">Thornton</td>
-                </tr>
-                <tr>
-                  <td>Expiration Time: </td>
-                  <td id="expires_utc">Thornton</td>
-                </tr>
-                <tr>
-                  <td>Cookie Value : </td>
-                  <td id="value">Thornton</td>
-                </tr>
-                <tr>
-                  <td>Cookie Path : </td>
-                  <td id="path">Thornton</td>
-                </tr>
-                <tr>
-                  <td>Is Secure : </td>
-                  <td id="is_secure">Thornton</td>
-                </tr>
-                <tr>
-                  <td>Is httponly : </td>
-                  <td id="is_httponly">Thornton</td>
-                </tr>
-                <tr>
-                  <td>Cookie Priority : </td>
-                  <td id="priority">Thornton</td>
-                </tr>
-                <tr>
-                  <td>Samesite Value : </td>
-                  <td id="samesite">Thornton</td>
-                </tr>
-                <tr>
-                  <td>Has Expirtation Date : </td>
-                  <td id="has_expires">Thornton</td>
-                </tr>
-                <tr>
-                  <td>Is Persistent : </td>
-                  <td id="is_persistent">Thornton</td>
-                </tr>
-                <tr>
-                  <td>Cookie Encrypted Value : </td>
-                  <td id="encrypted_value">Thornton</td>
-                </tr>
-              </tbody>
-            </table>
-            <!-- <div class="row equal">
-              <div class="col-sm align-self-stretch detail">
-                <b>host_key</b>
-              </div>
-              <div class="col-sm align-self-stretch detail" id="host_key">
-                <p>.fandago.com</p>
-              </div>
-            </div>
-            <div class="row equal">
-              <div class="col-sm detail align-self-stretch">
-                <b>Name</b>
-              </div>
-              <div class="col-sm detail align-self-stretch" id="name">
-                <p>zip</p>
-              </div>
-            </div>
-            <div class="row equal">
-              <div class="col-sm detail align-self-stretch">
-                <b>Creation Time</b>
-              </div>
-              <div class="col-sm detail align-self-stretch" id="creation_utc">
-                <p>01/01/2018, 03:00:00.000 PM</p>
-              </div>
-            </div>
-            <div class="row equal">
-              <div class="col-sm detail align-self-stretch">
-                <b>Last Used Time</b>
-              </div>
-              <div class="col-sm detail align-self-stretch" id="last_access_utc">
-                <p>01/01/2019, 03:00:00.000 PM</p>
-              </div>
-            </div>
-            <div class="row equal">
-              <div class="col-sm detail align-self-stretch">
-                <b>Expiration Time</b>
-              </div>
-              <div class="col-sm detail align-self-stretch" id="expires_utc">
-                <p>01/01/2020, 03:00:00.000 PM</p>
-              </div>
-            </div>
-            <div class="row equal">
-              <div class="col-sm detail align-self-stretch">
-                <b>value</b>
-              </div>
-              <div class="col-sm detail align-self-stretch" id="value">
-                <p>''</p>
-              </div>
-              <div class="col-sm detail align-self-stretch">
-                <b>path</b>
-              </div>
-              <div class="col-sm detail align-self-stretch" id="path">
-                <p>'/'</p>
-              </div>
-            </div> 
-            <div class="row equal">
-              <div class="col-sm detail align-self-stretch">
-                <b>is_secure</b>
-              </div>
-              <div class="col-sm detail align-self-stretch" id="is_secure">
-                <p>1</p>
-              </div>
-              <div class="col-sm detail align-self-stretch">
-                <b>is_httponly</b>
-              </div>
-              <div class="col-sm detail align-self-stretch" id="is_httponly">
-                <p>0</p>
-              </div>
-              <div class="col-sm detail align-self-stretch">
-                <b>priority</b>
-              </div>
-              <div class="col-sm detail align-self-stretch" id="priority">
-                <p>1</p>
-              </div>
-            </div>
-            <div class="row equal">
-              <div class="col-sm detail align-self-stretch">
-                <b>samesite</b>
-              </div>
-              <div class="col-sm detail align-self-stretch" id="samesite">
-                <p>-1</p>
-              </div>
-              <div class="col-sm detail align-self-stretch">
-                <b>has_expires</b>
-              </div>
-              <div class="col-sm detail align-self-stretch" id="has_expires">
-                <p>1</p>
-              </div>
-              <div class="col-sm detail align-self-stretch">
-                <b>is_persistent</b>
-              </div>
-              <div class="col-sm detail align-self-stretch" id="is_persistent">
-                <p>1</p>
-              </div>
-            </div>
-            <div class="row equal">
-              <div class="col-sm detail align-self-stretch">
-                <b>encrypted_value</b>
-              </div>
-              <div class="col-sm detail align-self-stretch" id="encrypted_value">
-                <p>&lt;Buffer 76 31 30 68 53 3e d1 61 10 31 d2 92 8f 3c 04 93 d8 eb 52&gt;</p>
-              </div>
-            </div> -->
-          </div>
-          <div class="col-sm-1"></div>
-        </div>
-        <div class="row">
-          <div class="col-sm-1"></div>
-          <div class="col-sm-10">
-            <div class="row">
-              <div class="btn-group">
-                <button type="button" id="Delete" class="btn btn-danger">Delete Cookie</button>
-                <button type="button" id="Randomize" class="btn btn-warning">Randomize Cookie</button>
-                <button type="button" id="Modify" class="btn btn-secondary">Modify Cookie</button>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-1"></div>
-            
+          <table id="detailedView" class="table table-striped" style="display: none;">
+            <thead>
+              <th colspan="2" class="text-center">
+                <div class="btn-group justify-content-center">
+                  <button type="button" id="Delete" class="btn btn-danger">Delete Cookie</button>
+                  <button type="button" id="Randomize" class="btn btn-warning">Randomize Cookie</button>
+                  <button type="button" id="Modify" class="btn btn-secondary">Modify Cookie</button>
+                </div>
+              </th>
+            </thead>
+          </table>
         </div>
       </div>
-     
     </div>
     <script src="index.js"></script>
-
-
-  
 
     <script>
       global.$ = require('jquery/dist/jquery');
@@ -358,33 +151,36 @@
         });
         $("#loadingWelcome").show();
         $("#continueWelcome").hide();
+        var viewer = $("#detailedView");
+        viewer.ready(function(){
+          viewer.hide();
+          console.log($("#Modify"));
+          viewer.on('click', '#Modify', function(){
+            modifyCookie();
+          });
 
-        $("#Modify").click(function(){
-          var cookie = JSON.parse('{"creation_utc": 13198689890368478,"host_key": ".fandango.com","name": "zip","value": "","path": "/","expires_utc": 13230225890000000,"is_secure": 1,"is_httponly": 0,"last_access_utc": 13198690365647604,"has_expires": 1,"is_persistent": 1,"priority": 1,"encrypted_value": "76 31 30 68 53 3e d1 61 10 31 d2 92 8f 3c 04 93 d8 eb 52","samesite": -1}');
-          modifyCookie();
-        });
+          viewer.on('click', '#Randomize', function(){
+            randomizeCookie();
+          });
 
-        $("#Randomize").click(function(){
-          randomizeCookie();
-        });
-
-        $("#Delete").click(function(){
-          try {
-            var table = $('#dtHorizontalVerticalExample').DataTable();
-            console.log(globalRowid);
-            table.row(globalRowid).remove();
-            $(`#${globalRowid}`).remove();
-            deleteCookie(globalCookie);
-          } catch(err) {
-            throw(err);
-          }
+          viewer.on('click', '#Delete', function(){
+            try {
+              var table = $('#dtHorizontalVerticalExample').DataTable();
+              console.log(globalRowid);
+              table.row(globalRowid).remove();
+              $(`#${globalRowid}`).remove();
+              deleteCookie(globalCookie);
+            } catch(err) {
+              throw(err);
+            }
+          });
         });
 
         setTimeout(() => {
           updateTable();
           var table = $('#dtHorizontalVerticalExample').DataTable({
             "scrollX": true,
-            "scrollY": false,
+            "scrollY": '70vh',
             select:true
           });
           
@@ -400,6 +196,7 @@
             var cookie = DBI.getCookie(cookieID);
             globalCookie = cookie;
             updateDetailedView(cookie);
+            $("#detailedView").show();
           });
 
           $("#loadingWelcome").hide();

@@ -27,13 +27,7 @@ function updateDetailedView(cookie){
     console.log(cookie);
     var cipher = new CC.ChromeCrypt();
     var table = $("#detailedView");
-    var heading =
-        "<thead>" +
-            "<tr>" +
-                "<th scope=\"col\">Key</th>" + 
-                "<th scope=\"col\">Value</th>" +
-            "</tr>" +
-        "</thead>";
+    var heading = table.children('thead');
     var body = $("<tbody></tbody>");
     for (var key in cookie) {
         if (key === "encrypted_value") {
