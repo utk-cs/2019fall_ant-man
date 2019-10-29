@@ -1,6 +1,7 @@
 var mode = 0;
 var globalCookie ; // cookie to store the present cookie being shown on the detailed view
 var oldCookie; //Copy of cookie before modification. 
+var globalRowid;
 const DBI = require('./db_interface').ChromeDB;
 const CC = require('./cookie_crypt');
 
@@ -23,7 +24,6 @@ const NAMES = {
 };
 
 function updateDetailedView(cookie){
-    globalCookie = cookie;
     console.log(cookie);
     var cipher = new CC.ChromeCrypt();
     var table = $("#detailedView");
@@ -44,6 +44,8 @@ function updateDetailedView(cookie){
         if (key === "value") {
             if (cookie["encrypted_value"] !== null) {
                 value = cipher.decrypt(cookie["encrypted_value"]);
+                cookie.value = value;
+                cookie.encrypted_value = null;
             }
         } else if (key == "creation_utc") {
             value = numToDate(cookie["creation_utc"])
@@ -52,13 +54,15 @@ function updateDetailedView(cookie){
         console.log(key);
         console.log(value);
         if(value === ''){
-            htmlstr = `<tr><td>${NAMES[key]}</td><td>''</td></tr>`;
+            htmlstr = `<tr><td>${NAMES[key]}</td><td id='${key}'>''</td></tr>`;
         } else {
-            htmlstr = `<tr><td>${NAMES[key]}</td><td>${value}</td></tr>`;
+            htmlstr = `<tr><td>${NAMES[key]}</td><td id='${key}'>${value}</td></tr>`;
         }
         
         body.append(htmlstr);
     }
+
+    globalCookie = cookie;
 
     table.empty();
     table.append(heading);
@@ -98,9 +102,10 @@ function updateTable() {
     var row;
     var cookie;
     var value;
+    var rowid = 0;
     var cipher = new CC.ChromeCrypt();
     for (cookie of cookies) {
-        row = $('<tr></tr>');
+        row = $(`<tr id="${rowid}"></tr>`);
         for (var key in cookie) {
             if (key === "encrypted_value") {
                 continue;
@@ -127,6 +132,7 @@ function updateTable() {
         }
 
         body.append(row);
+        rowid++;
     }
 
     console.log(body);
@@ -156,7 +162,7 @@ function dateToNum(date){
 
 function modifyCookie(){
     if(globalCookie != undefined){
-        if(mode == 0){
+        if(mode === 0){
             var htmlstr;
             for(var key in globalCookie){
                 if(key == "expires_utc"){
@@ -178,7 +184,13 @@ function modifyCookie(){
         }else{
             var newCookie = {};
             for(var key in globalCookie){
-                var val = document.getElementById(key + "input").value;
+                console.log(key+"input");
+                var val = document.getElementById(key + "input");
+                if (val === null) {
+                    continue;
+                } else {
+                    val = val.value;
+                }
                 if(key == "expires_utc"){
                     var date = new Date(val);
                     newCookie[key] = dateToNum(date);
@@ -190,17 +202,30 @@ function modifyCookie(){
                     newCookie[key] = dateToNum(date);
                 }else{
                     if(val === ""){
-                        newCookie[key] = cookie[key];
+                        newCookie[key] = globalCookie[key];
                     }else{
                         newCookie[key] = val;
                     }
                 }
                 
-                
+                newCookie["encrypted_value"] = null;
             }
+
             oldCookie = globalCookie;
             updateDetailedView(newCookie);
             globalCookie = newCookie;
+
+            if (
+                oldCookie.host_key === newCookie.host_key &&
+                oldCookie.name === newCookie.name &&
+                oldCookie.path === newCookie.path
+            ) {
+                DBI.modifyCookie(newCookie);
+            } else {
+                DBI.deleteCookie(oldCookie);
+                DBI.addCookie(newCookie);
+            }
+
             document.getElementById("Modify").innerHTML = "Modify Cookie";
             mode = 0;
         }
@@ -211,3 +236,83 @@ function submitCookie(){
 
 }
 
+//reusued stack overflow snippet
+function makeRandomStr(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+       result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
+
+//make creation time
+function makeCreationTime() {
+    length = 10;
+    var result           = '1319869';
+    var characters       = '0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+       result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
+
+//make expires time
+function makeExpiresTime() {
+    length = 14;
+    var result           = '132';
+    var characters       = '0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+       result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
+
+function randomCookie(cookie) {
+    cookie.creation_utc = makeCreationTime();
+    //cookie.host_key = makeRandomStr(15);
+    //cookie.name = makeRandomStr(10);
+    cookie.value = makeRandomStr(10);
+    //cookie.path = '/';
+    cookie.expires_utc = makeExpiresTime();
+    cookie.is_secure = Math.floor((Math.random() * 2));
+    cookie.is_httponly = Math.floor((Math.random() * 2));
+    cookie.last_access_utc = parseInt(creation_utc,10) + Math.floor((Math.random() * 1000));
+    cookie.has_expires = Math.floor((Math.random() * 2));
+    cookie.is_persistent = Math.floor((Math.random() * 2));
+    cookie.priority = Math.floor((Math.random() * 2));
+    //cookie.encrypted_value = makeRandomStr(25);
+    cookie.samesite = Math.floor((Math.random() * 2));
+
+    return cookie;
+}
+
+function randomizeCookie() {
+    newCookie = randomCookie(globalCookie);
+
+    oldCookie = globalCookie;
+    updateDetailedView(newCookie);
+    globalCookie = newCookie;
+
+    if (
+        oldCookie.host_key === newCookie.host_key &&
+        oldCookie.name === newCookie.name &&
+        oldCookie.path === newCookie.path
+    ) {
+        DBI.modifyCookie(newCookie);
+    } else {
+        DBI.deleteCookie(oldCookie);
+        DBI.addCookie(newCookie);
+    }
+}
+
+function deleteCookie() {
+    DBI.deleteCookie(globalCookie);
+}
+
+var creation_utc = makeCreationTime();
+var x = parseInt(creation_utc,10) + Math.floor((Math.random() * 1000));
+console.log (x);
