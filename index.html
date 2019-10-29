@@ -368,6 +368,18 @@
           randomizeCookie();
         });
 
+        $("#Delete").click(function(){
+          try {
+            var table = $('#dtHorizontalVerticalExample').DataTable();
+            console.log(globalRowid);
+            table.row(globalRowid).remove();
+            $(`#${globalRowid}`).remove();
+            deleteCookie(globalCookie);
+          } catch(err) {
+            throw(err);
+          }
+        });
+
         setTimeout(() => {
           updateTable();
           var table = $('#dtHorizontalVerticalExample').DataTable({
@@ -376,14 +388,17 @@
             select:true
           });
           
-          table.on('select', function () {
-            var rowData = table.rows({selected: true}).data()[0];
+          table.on('click', 'tr', function () {
+            globalRowid = table.row(this).id();
+            console.log(globalRowid);
+            var rowData = table.row(this).data();
             var cookieID = {
               host_key: rowData[1],
               name: rowData[2],
               path: rowData[4]
             };
             var cookie = DBI.getCookie(cookieID);
+            globalCookie = cookie;
             updateDetailedView(cookie);
           });
 

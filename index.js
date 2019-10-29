@@ -1,6 +1,7 @@
 var mode = 0;
 var globalCookie ; // cookie to store the present cookie being shown on the detailed view
 var oldCookie; //Copy of cookie before modification. 
+var globalRowid;
 const DBI = require('./db_interface').ChromeDB;
 const CC = require('./cookie_crypt');
 
@@ -101,9 +102,10 @@ function updateTable() {
     var row;
     var cookie;
     var value;
+    var rowid = 0;
     var cipher = new CC.ChromeCrypt();
     for (cookie of cookies) {
-        row = $('<tr></tr>');
+        row = $(`<tr id="${rowid}"></tr>`);
         for (var key in cookie) {
             if (key === "encrypted_value") {
                 continue;
@@ -130,6 +132,7 @@ function updateTable() {
         }
 
         body.append(row);
+        rowid++;
     }
 
     console.log(body);
@@ -304,6 +307,10 @@ function randomizeCookie() {
         DBI.deleteCookie(oldCookie);
         DBI.addCookie(newCookie);
     }
+}
+
+function deleteCookie() {
+    DBI.deleteCookie(globalCookie);
 }
 
 var creation_utc = makeCreationTime();
