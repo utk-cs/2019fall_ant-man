@@ -42,7 +42,13 @@ function updateDetailedView(cookie){
                 cookie.encrypted_value = null;
             }
         } else if (key == "creation_utc") {
-            value = numToDate(cookie["creation_utc"])
+            value = simpleDate(cookie["creation_utc"])
+        }
+        else if(key == "expires_utc")  {
+            value = simpleDate(cookie["expires_utc"])
+        }
+        else if(key == "last_access_utc")  {
+            value = simpleDate(cookie["last_access_utc"])
         }
 
         console.log(key);
@@ -112,13 +118,13 @@ function updateTable() {
                 }
             }
             else if (key == "creation_utc") {
-                value = numToDate(cookie["creation_utc"])
+                value = simpleDate(cookie["creation_utc"])
             }
             else if(key == "expires_utc")  {
-                value = numToDate(cookie["expires_utc"])
+                value = simpleDate(cookie["expires_utc"])
             }
             else if(key == "last_access_utc")  {
-                value = numToDate(cookie["last_access_utc"])
+                value = simpleDate(cookie["last_access_utc"])
             }
            
 
@@ -136,6 +142,16 @@ function updateTable() {
     console.log("Done");
 }
 
+function simpleDate(num) {
+    var options = {year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'};
+    var offset = num/1000;
+    var dateOffset = new Date(Date.UTC(1601, 1, 1));
+    
+    var simplifiedDate = new Date(dateOffset.getTime()+offset)
+
+    return simplifiedDate.toLocaleDateString('en-us', options);
+}
+
 function numToDate(num){
     var offset = num/1000;
     var dateOffset = new Date(Date.UTC(1601, 1, 1));
@@ -143,7 +159,7 @@ function numToDate(num){
     var simplifiedDate = new Date(dateOffset.getTime()+offset)
     // v  = simplifiedDate.toISOString()
 
-    return simplifiedDate
+    return simplifiedDate;
     // return simplifiedDate.toISOString()
     // return new Date(dateOffset.getTime()+offset);
 }
