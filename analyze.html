@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+          google.charts.load('current', {'packages':['corechart']});
+          google.charts.setOnLoadCallback(drawChart);
+    
+          function drawChart() {
+    
+            var data = google.visualization.arrayToDataTable([
+              ['Task', 'Hours per Day'],
+              ['Non-tracking',      6271],
+              ['Tracking',     1987],
+              ['Potentially Tracking',  783]
+            ]);
+    
+            var options = {
+              title: 'Cookie Data'
+            };
+    
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+    
+            chart.draw(data, options);
+          }
+        </script>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.0/css/buttons.dataTables.min.css">
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    
+   
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <title>Hello, world!</title>
+    <style>
+      .vertScrollbar {
+      position: relative;
+      height: 800px;
+      overflow: auto;
+      }
+      .detail {
+        border-style: solid;
+        border-color: grey;
+        margin: 0em;
+      }
+      .detail p,b {
+        margin: 0;
+        padding: 0;
+        font-size: 30px;
+      }
+      
+      .new{
+        padding: 0;
+      }
+      
+    </style>
+    
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <div id="button">
+      <a class="navbar-brand" href="index.html">Cookie Monsterrr</a>
+        </div>
+      
+      <!-- href contains a where the link goes to -->
+      <ul class="navbar-nav">
+        <!-- <li class="nav-item active">
+          <a class="nav-link" href="sample.html">Active</a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link" href="learn_more.html">Learn More</a>
+        </li>
+        <li class="nav-item">
+            <div id="button">
+          <a class="nav-link" href="analyze.html">Analyze</a>
+            </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/utk-cs/2019fall_ant-man/blob/master/README.md" target="_blank">Read Me</a>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link disabled" href="#">Disabled</a>
+        </li> -->
+      </ul>
+    </nav>
+  </head>
+  <body>
+        <div id="piechart" style="width: 2000px; height: 800px;"></div>
+      
+    </body>
+</html>
