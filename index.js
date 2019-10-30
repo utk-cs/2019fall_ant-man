@@ -33,6 +33,9 @@ function updateDetailedView(cookie){
         if (key === "encrypted_value") {
             continue;
         }
+        // if (key === "path") {
+        //     continue;
+        // }
         
         value = cookie[key];
         if (key === "value") {
@@ -81,7 +84,7 @@ function updateTable() {
     var heading = 
         "<thead>" +
             "<tr>" +
-                "<th>creation_utc</th>" +
+                "<th>Creation Time</th>" +
                 "<th>host_key</th>" +
                 "<th>name</th>" +
                 "<th>value</th>" +
@@ -105,11 +108,21 @@ function updateTable() {
     var rowid = 0;
     var cipher = new CC.ChromeCrypt();
     for (cookie of cookies) {
-        row = $(`<tr id="${rowid}"></tr>`);
+        if (cookie["name"] === "_ga" || cookie["name"] === "__utma" || cookie["name"] === "__utmz" || cookie["name"] === "_gcl_au") {
+            row = $(`<tr class="table-danger" id="${rowid}"></tr>`);
+        }
+        else {
+            row = $(`<tr id="${rowid}"></tr>`);
+        }
+
         for (var key in cookie) {
             if (key === "encrypted_value") {
                 continue;
             }
+
+            // if (key === "path") {
+            //     continue;
+            // }
             
             value = cookie[key];
             if (key === "value") {
@@ -126,6 +139,8 @@ function updateTable() {
             else if(key == "last_access_utc")  {
                 value = simpleDate(cookie["last_access_utc"])
             }
+
+
            
 
             row.append(`<td>${value}</td>`);
