@@ -107,9 +107,14 @@ function updateTable() {
     var value;
     var rowid = 0;
     var cipher = new CC.ChromeCrypt();
+    var numTracking = 0;
     for (cookie of cookies) {
-        if (cookie["name"] === "_ga" || cookie["name"] === "__utma" || cookie["name"] === "__utmz" || cookie["name"] === "_gcl_au") {
+        //google analytics cookie
+        if (cookie["name"] === "_ga" || cookie["name"] === "__utma" || cookie["name"] === "__utmz" || cookie["name"] === "_gcl_au" ||
+        cookie["name"] === "__qca" || cookie["name"] === "s_ecid" || cookie["name"] === "s_vi" ||  cookie["name"] === "s_cc" || cookie["name"] === "s_sq"
+        || cookie["name"] === "s_fid" || cookie["name"] === "adcloud" || cookie["name"] === "_sn" || cookie["name"] === "rat_v" || cookie["name"] === "_ceir") {
             row = $(`<tr class="table-danger" id="${rowid}"></tr>`);
+            numTracking++;
         }
         else {
             row = $(`<tr id="${rowid}"></tr>`);
@@ -150,6 +155,8 @@ function updateTable() {
         rowid++;
     }
 
+    console.log(numTracking);
+    console.log(rowid)
     console.log(body);
     table.innerHTML = "";
     table.append(heading);
