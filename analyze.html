@@ -17,13 +17,17 @@
             ]);
     
             var options = {
-              title: 'Cookie Data'
+              title: 'Cookie Data',
+              width: '100vh',
+              height: '100vh'
             };
     
             var chart = new google.visualization.PieChart(document.getElementById('piechart'));
     
             chart.draw(data, options);
           }
+
+          window.onresize = drawChart;
         </script>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -93,8 +97,8 @@
       </ul>
     </nav>
   </head>
-  <body>
-        <div id="piechart" style="width: 2000px; height: 800px;"></div>
+  <body style="overflow: hidden;">
+        <div id="piechart" class="justify-content-center" style="width: 100vh; height: 80vh;"></div>
       
     </body>
 </html>
