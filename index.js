@@ -230,7 +230,7 @@ function modifyCookie(){
                     var date = numToDate(globalCookie[key]);
                     htmlstr = '<input type="datetime-local" id="' + key + 'input" min="1601-01-01T00:00" max="3000-01-01T00:00" class="form-control form-control-lg align-self-stretch" value="' + date.toISOString().replace('Z', '') +'">';
                 }else{
-                    htmlstr = '<input type="text" id="' + key + 'input" class="form-control form-control-lg align-self-stretch" placeholder="' + globalCookie[key] + '" >';
+                    htmlstr = '<input type="text" id="' + key + 'input" class="form-control form-control-lg align-self-stretch" value="' + globalCookie[key] + '" >';
                 }
                 $("#"+key).html(htmlstr);
             }
