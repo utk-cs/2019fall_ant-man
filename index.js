@@ -79,6 +79,9 @@ function updateTable() {
     const DBI = require('./db_interface').ChromeDB;
     console.log("Updating table...");
     var cookies = DBI.listCookies();
+    var total = cookies.length;
+    var count = 0;
+    console.log("Got cookies.");
 
     var table = $("#dtHorizontalVerticalExample");
     var heading = 
@@ -108,60 +111,80 @@ function updateTable() {
     var rowid = 0;
     var cipher = new CC.ChromeCrypt();
     var numTracking = 0;
-    for (cookie of cookies) {
-        //google analytics cookie
-        if (cookie["name"] === "_ga" || cookie["name"] === "__utma" || cookie["name"] === "__utmz" || cookie["name"] === "_gcl_au" ||
-        cookie["name"] === "__qca" || cookie["name"] === "s_ecid" || cookie["name"] === "s_vi" ||  cookie["name"] === "s_cc" || cookie["name"] === "s_sq"
-        || cookie["name"] === "s_fid" || cookie["name"] === "adcloud" || cookie["name"] === "_sn" || cookie["name"] === "rat_v" || cookie["name"] === "_ceir") {
-            row = $(`<tr class="table-danger" id="${rowid}"></tr>`);
-            numTracking++;
-        }
-        else {
-            row = $(`<tr id="${rowid}"></tr>`);
-        }
-
-        for (var key in cookie) {
-            if (key === "encrypted_value") {
-                continue;
+    var loadingD = jQuery.Deferred();
+    var tableD = jQuery.Deferred();
+    
+    function buildRow(index) {
+        if (index >= cookies.length) {
+            loadingD.resolve();
+        } else {
+            var cookie = cookies[index];
+            //google analytics cookie
+            if (cookie["name"] === "_ga" || cookie["name"] === "__utma" || cookie["name"] === "__utmz" || cookie["name"] === "_gcl_au" ||
+            cookie["name"] === "__qca" || cookie["name"] === "s_ecid" || cookie["name"] === "s_vi" ||  cookie["name"] === "s_cc" || cookie["name"] === "s_sq"
+            || cookie["name"] === "s_fid" || cookie["name"] === "adcloud" || cookie["name"] === "_sn" || cookie["name"] === "rat_v" || cookie["name"] === "_ceir") {
+                row = $(`<tr class="table-danger" id="${rowid}"></tr>`);
+                numTracking++;
+            }
+            else {
+                row = $(`<tr id="${rowid}"></tr>`);
             }
 
-            // if (key === "path") {
-            //     continue;
-            // }
-            
-            value = cookie[key];
-            if (key === "value") {
-                if (cookie["encrypted_value"] !== null) {
-                    value = cipher.decrypt(cookie["encrypted_value"]);
+            for (var key in cookie) {
+                if (key === "encrypted_value") {
+                    continue;
                 }
-            }
-            else if (key == "creation_utc") {
-                value = simpleDate(cookie["creation_utc"])
-            }
-            else if(key == "expires_utc")  {
-                value = simpleDate(cookie["expires_utc"])
-            }
-            else if(key == "last_access_utc")  {
-                value = simpleDate(cookie["last_access_utc"])
-            }
+
+                // if (key === "path") {
+                //     continue;
+                // }
+                
+                value = cookie[key];
+                if (key === "value") {
+                    if (cookie["encrypted_value"] !== null) {
+                        value = cipher.decrypt(cookie["encrypted_value"]);
+                    }
+                }
+                else if (key == "creation_utc") {
+                    value = simpleDate(cookie["creation_utc"])
+                }
+                else if(key == "expires_utc")  {
+                    value = simpleDate(cookie["expires_utc"])
+                }
+                else if(key == "last_access_utc")  {
+                    value = simpleDate(cookie["last_access_utc"])
+                }
 
 
-           
+            
 
-            row.append(`<td>${value}</td>`);
+                row.append(`<td>${value}</td>`);
+            }
+
+            body.append(row);
+            rowid++;
+            count++;
+        
+            $("#loadingProgress").html(Math.round((count/total) * 100));
+            console.log(Math.round((count/total)*100));
+
+            setTimeout(buildRow, 0, index+1);
         }
-
-        body.append(row);
-        rowid++;
     }
 
-    console.log(numTracking);
-    console.log(rowid)
-    console.log(body);
-    table.innerHTML = "";
-    table.append(heading);
-    table.append(body);
-    console.log("Done");
+    buildRow(0);
+    loadingD.promise().then(function(){
+        console.log(numTracking);
+        console.log(rowid)
+        console.log(body);
+        table.innerHTML = "";
+        table.append(heading);
+        table.append(body);
+        console.log("Done");
+        tableD.resolve();
+    });
+
+    return tableD.promise();
 }
 
 function simpleDate(num) {

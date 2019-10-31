@@ -109,8 +109,8 @@
   </head>
   <body>
     <div id="welcomeModal" class="modal">
-      <h2>This is Cookie Monsterrr</h2>
-      <p>
+      <h2>Loading... <span id="loadingProgress">0</span>%</h2>
+      <!--<p>
         Hello, World! This is Cookie Monsterrr, a browser cookie managment tool.
         With this tool, you can browse, view, add, modify, our delete your browser cookies!
         This is an especially important thing to do.
@@ -118,10 +118,10 @@
         But not all cookies are bad! Some of them simply keep you logged in after you click that checkbox.
         Some of them help websites know whether or not you've enabled their dark theme.
         That's why we've made this tool. We made it to give control back to you.
-      </p>
+      </p>-->
       <div class="d-flex justify-content-center">
-        <img id="loadingWelcome" src="loading.gif" />
-        <a id="continueWelcome" href="#" class="btn btn-info" rel="modal:close">Continue</a>
+        <img id="loadingWelcome" src="cookie.gif" />
+        <!--<a id="continueWelcome" href="#" class="btn btn-info" rel="modal:close">Continue</a>-->
       </div>
     </div>
     <div class="row">
@@ -188,30 +188,32 @@
         });
 
         setTimeout(() => {
-          updateTable();
-          var table = $('#dtHorizontalVerticalExample').DataTable({
-            "scrollX": true,
-            "scrollY": '70vh',
-            select:true
-          });
-          
-          table.on('click', 'tr', function () {
-            globalRowid = table.row(this).id();
-            console.log(globalRowid);
-            var rowData = table.row(this).data();
-            var cookieID = {
-              host_key: rowData[1],
-              name: rowData[2],
-              path: rowData[4]
-            };
-            var cookie = DBI.getCookie(cookieID);
-            globalCookie = cookie;
-            updateDetailedView(cookie);
-            $("#detailedView").show();
-          });
+          updateTable().then(function(){
+            var table = $('#dtHorizontalVerticalExample').DataTable({
+              "scrollX": true,
+              "scrollY": '70vh',
+              select:true
+            });
+            
+            table.on('click', 'tr', function () {
+              globalRowid = table.row(this).id();
+              console.log(globalRowid);
+              var rowData = table.row(this).data();
+              var cookieID = {
+                host_key: rowData[1],
+                name: rowData[2],
+                path: rowData[4]
+              };
+              var cookie = DBI.getCookie(cookieID);
+              globalCookie = cookie;
+              updateDetailedView(cookie);
+              $("#detailedView").show();
+            });
 
-          $("#loadingWelcome").hide();
-          $("#continueWelcome").show();
+            $("#loadingWelcome").hide();
+            $.modal.close();
+            //$("#continueWelcome").show();
+          });
         }, 3000);
         // $("#tester").click(function(){
         //   var cookie = JSON.parse('{"creation_utc": 13198689890368478,"host_key": ".fandango.com","name": "zip","value": "","path": "/","expires_utc": 13230225890000000,"is_secure": 1,"is_httponly": 0,"last_access_utc": 13198690365647604,"has_expires": 1,"is_persistent": 1,"priority": 1,"encrypted_value": "76 31 30 68 53 3e d1 61 10 31 d2 92 8f 3c 04 93 d8 eb 52","samesite": -1}');
