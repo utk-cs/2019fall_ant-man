@@ -166,7 +166,7 @@ function updateTable() {
             count++;
         
             $("#loadingProgress").html(Math.round((count/total) * 100));
-            console.log(Math.round((count/total)*100));
+            //console.log(Math.round((count/total)*100));
 
             setTimeout(buildRow, 0, index+1);
         }
@@ -368,6 +368,27 @@ function deleteCookie() {
     DBI.deleteCookie(globalCookie);
 }
 
-var creation_utc = makeCreationTime();
-var x = parseInt(creation_utc,10) + Math.floor((Math.random() * 1000));
-console.log (x);
+function pxToNum(s) {
+    return Number(s.slice(0, -2));
+}
+
+function numToPx(n) {
+    return String(n)+"px";
+}
+
+function resizeElements() {
+    var navHeight = pxToNum($("#mainNav").css('height'));
+    var bodyHeight = pxToNum($("body").css('height'));
+    var contentHeight = bodyHeight-navHeight;
+    console.log(navHeight, bodyHeight, contentHeight);
+    $("#mainContent").css('height', numToPx(contentHeight));
+
+    var dtLengthHeight = $(".dataTables_length").outerHeight(true);
+    var dtFilterHeight = $(".dataTables_filter").outerHeight(true);
+    var dtInfoHeight = $(".dataTables_info").outerHeight(true);
+    var dtPaginateHeight = $(".dataTables_paginate").outerHeight(true);
+    var dtScrollHeadHeight = $(".dataTables_scrollHead").outerHeight(true);
+    var dtScrollBodyHeight = contentHeight - (dtLengthHeight + dtFilterHeight + dtInfoHeight + dtPaginateHeight + dtScrollHeadHeight);
+    console.log(dtLengthHeight, dtFilterHeight, dtInfoHeight, dtPaginateHeight, dtScrollHeadHeight, dtScrollBodyHeight);
+    $(".dataTables_scrollBody").css('height', numToPx(dtScrollBodyHeight));
+}

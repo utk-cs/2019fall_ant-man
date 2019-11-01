@@ -40,10 +40,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
     <title>Cookie Monsterrr</title>
     <style>
-      body {
-        overflow: hidden;
+      html, body {
+        width: 100%;
+        height: 100%;
       }
 
+      body {
+        overflow-x: hidden;
+      }
+      
       .vertScrollbar {
       position: relative;
       height: 800px;
@@ -78,7 +83,7 @@
       }
     </style>
     
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <nav id="mainNav" class="navbar navbar-expand-sm bg-dark navbar-dark">
       <a class="navbar-brand" href="#">Cookie Monsterrr</a>
       
       <!-- href contains a where the link goes to -->
@@ -124,14 +129,12 @@
         <!--<a id="continueWelcome" href="#" class="btn btn-info" rel="modal:close">Continue</a>-->
       </div>
     </div>
-    <div class="row">
-      <div class="col-sm-6">
-        <div  style="padding: 10px">
+    <div id="mainContent" class="row">
+      <div id="cookieList" class="col-sm-6">
           <table id="dtHorizontalVerticalExample" class="table table-striped table-bordered table-sm " cellspacing="0" width="100%">
           </table>
-        </div>
       </div>
-      <div class="col-sm-6" style="overflow-x: auto;">
+      <div id="cookieView" class="col-sm-6" style="overflow-x: auto;">
         <div class="row">
           <table id="detailedView" class="table table-striped" style="display: none;">
             <thead>
@@ -191,9 +194,12 @@
           updateTable().then(function(){
             var table = $('#dtHorizontalVerticalExample').DataTable({
               "scrollX": true,
-              "scrollY": '70vh',
+              "scrollY": true,
               select:true
             });
+
+            resizeElements();
+            $(window).on('resize', resizeElements);
             
             table.on('click', 'tr', function () {
               globalRowid = table.row(this).id();
