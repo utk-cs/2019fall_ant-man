@@ -131,7 +131,24 @@
     </div>
     <div id="mainContent" class="row">
       <div id="cookieList" class="col-sm-6">
-          <table id="dtHorizontalVerticalExample" class="table table-striped table-bordered table-sm " cellspacing="0" width="100%">
+          <table id="cookies-dt" class="table table-striped table-bordered table-sm " cellspacing="0" width="100%">
+              <thead>
+                  <tr>
+                      <th>Creation Date</th>
+                      <th>Website</th>
+                      <th>Name</th>
+                      <th>Path</th>
+                      <th>Value</th>
+                      <th>Expiration Date</th>
+                      <th>Last Access Date</th>
+                      <th>Is Secure</th>
+                      <th>Is Httponly</th>
+                      <th>Has Expires</th>
+                      <th>Is Persistent</th>
+                      <th>Priority</th>
+                      <th>Samesite</th>
+                  </tr>
+              </thead>
           </table>
       </div>
       <div id="cookieView" class="col-sm-6" style="overflow-x: auto;">
@@ -160,7 +177,7 @@
           clickClose: false,
           showClose: false,
 
-          fadeDuration: 1000,
+          fadeDuration: 100,
           fadeDelay: 2.0
         });
         $("#loadingWelcome").show();
@@ -179,7 +196,7 @@
 
           viewer.on('click', '#Delete', function(){
             try {
-              var table = $('#dtHorizontalVerticalExample').DataTable();
+              var table = $('#cookies-dt').DataTable();
               console.log(globalRowid);
               table.row(globalRowid).remove();
               $(`#${globalRowid}`).remove();
@@ -191,13 +208,38 @@
         });
 
         setTimeout(() => {
-          updateTable().then(function(){
-            var table = $('#dtHorizontalVerticalExample').DataTable({
-              "scrollX": true,
-              "scrollY": true,
-              select:true
-            });
+          var table = $('#cookies-dt').DataTable({
+            scrollX: true,
+            scrollY: true,
+            select: 'single',
+            ajax: function(data, callback, settings) {
+              var rv = {};
+              console.log("z");
+              retrieveCookies(rv).then(function(){
+                callback(rv);
+              });
+            },
+            columns: [
+              { data: "creation_utc" },
+              { data: "host_key" },
+              { data: "name" },
+              { data: "path" },
+              { data: "value" },
+              { data: "expires_utc" },
+              { data: "last_access_utc" },
+              { data: "is_secure" },
+              { data: "is_httponly" },
+              { data: "has_expires" },
+              { data: "is_persistent" },
+              { data: "priority" },
+              { data: "samesite" }
+            ],
+            initComplete: function(settings, json){
+                onTableReady();
+            }
+          });
 
+          function onTableReady() {
             resizeElements();
             $(window).on('resize', resizeElements);
             
@@ -205,10 +247,11 @@
               globalRowid = table.row(this).id();
               console.log(globalRowid);
               var rowData = table.row(this).data();
+              console.log(rowData);
               var cookieID = {
-                host_key: rowData[1],
-                name: rowData[2],
-                path: rowData[4]
+                host_key: rowData["host_key"],
+                name: rowData["name"],
+                path: rowData["path"]
               };
               var cookie = DBI.getCookie(cookieID);
               globalCookie = cookie;
@@ -218,9 +261,10 @@
 
             $("#loadingWelcome").hide();
             $.modal.close();
+          };
+
             //$("#continueWelcome").show();
-          });
-        }, 3000);
+        }, 10);
         // $("#tester").click(function(){
         //   var cookie = JSON.parse('{"creation_utc": 13198689890368478,"host_key": ".fandango.com","name": "zip","value": "","path": "/","expires_utc": 13230225890000000,"is_secure": 1,"is_httponly": 0,"last_access_utc": 13198690365647604,"has_expires": 1,"is_persistent": 1,"priority": 1,"encrypted_value": "76 31 30 68 53 3e d1 61 10 31 d2 92 8f 3c 04 93 d8 eb 52","samesite": -1}');
         //   updateDetailedView(cookie);
