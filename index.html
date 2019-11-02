@@ -137,8 +137,8 @@
                       <th>Creation Date</th>
                       <th>Website</th>
                       <th>Name</th>
-                      <th>Path</th>
                       <th>Value</th>
+                      <th>Path</th>
                       <th>Expiration Date</th>
                       <th>Last Access Date</th>
                       <th>Is Secure</th>
@@ -208,6 +208,14 @@
         });
 
         setTimeout(() => {
+          function dateRender(data, type, row) {
+                  if (type === 'search' || type === 'display') {
+                    return simpleDate(data);
+                  }
+
+                  return data;
+          }
+
           var table = $('#cookies-dt').DataTable({
             scrollX: true,
             scrollY: true,
@@ -220,13 +228,13 @@
               });
             },
             columns: [
-              { data: "creation_utc" },
+              { data: "creation_utc", render: dateRender },
               { data: "host_key" },
               { data: "name" },
-              { data: "path" },
               { data: "value" },
-              { data: "expires_utc" },
-              { data: "last_access_utc" },
+              { data: "path" },
+              { data: "expires_utc", render: dateRender },
+              { data: "last_access_utc", render: dateRender },
               { data: "is_secure" },
               { data: "is_httponly" },
               { data: "has_expires" },
