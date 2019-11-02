@@ -93,7 +93,6 @@ function retrieveCookies(rv) {
 
             progress.html(Math.round((index/cookies.length) * 100));
             setTimeout(build, 0, index+1);
-            console.log(index);
         }
 
         return buildD.promise();

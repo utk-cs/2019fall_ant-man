@@ -185,7 +185,7 @@
         var viewer = $("#detailedView");
         viewer.ready(function(){
           viewer.hide();
-          console.log($("#Modify"));
+
           viewer.on('click', '#Modify', function(){
             modifyCookie();
           });
@@ -240,6 +240,22 @@
           });
 
           function onTableReady() {
+            var tracking = table.rows(function(idx, data, node){
+              if (
+                data["name"] === "_ga" || data["name"] === "__utma" || data["name"] === "__utmz" ||
+                data["name"] === "_gcl_au" || data["name"] === "__qca" || data["name"] === "s_ecid" ||
+                data["name"] === "s_vi" ||  data["name"] === "s_cc" || data["name"] === "s_sq" ||
+                data["name"] === "s_fid" || data["name"] === "adcloud" || data["name"] === "_sn" ||
+                data["name"] === "rat_v" || data["name"] === "_ceir"
+              ) {
+                return true;
+              } else {
+                return false;
+              }
+            }).every(function(rowIdx, tableNode, rowLoop){
+              $(this.node()).addClass('table-danger');
+            });
+
             resizeElements();
             $(window).on('resize', resizeElements);
             
