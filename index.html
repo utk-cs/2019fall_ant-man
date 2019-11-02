@@ -81,6 +81,15 @@
       tr.table-danger.selected td {
         background-color: #f36473!important;
       }
+
+      .big-checkbox {
+        width:30px;
+        height:30px;
+      }
+
+      .bool-cell {
+        text-align: center;
+      }
     </style>
     
     <nav id="mainNav" class="navbar navbar-expand-sm bg-dark navbar-dark">
@@ -141,11 +150,11 @@
                       <th>Path</th>
                       <th>Expiration Date</th>
                       <th>Last Access Date</th>
+                      <th>Priority</th>
                       <th>Is Secure</th>
                       <th>Is Httponly</th>
                       <th>Has Expires</th>
                       <th>Is Persistent</th>
-                      <th>Priority</th>
                       <th>Samesite</th>
                   </tr>
               </thead>
@@ -209,11 +218,19 @@
 
         setTimeout(() => {
           function dateRender(data, type, row) {
-                  if (type === 'search' || type === 'display') {
-                    return simpleDate(data);
-                  }
+            if (type === 'search' || type === 'display') {
+              return simpleDate(data);
+            }
 
-                  return data;
+            return data;
+          }
+
+          function boolRender(data, type, row) {
+            if (type === 'display') {
+              return `<input class="big-checkbox" type="checkbox" ${data === 1 ? "checked" : ""} disabled>`
+            }
+
+            return data;
           }
 
           var table = $('#cookies-dt').DataTable({
@@ -235,12 +252,12 @@
               { data: "path" },
               { data: "expires_utc", render: dateRender },
               { data: "last_access_utc", render: dateRender },
-              { data: "is_secure" },
-              { data: "is_httponly" },
-              { data: "has_expires" },
-              { data: "is_persistent" },
               { data: "priority" },
-              { data: "samesite" }
+              { data: "is_secure", render: boolRender, className: 'bool-cell' },
+              { data: "is_httponly", render: boolRender, className: 'bool-cell' },
+              { data: "has_expires", render: boolRender, className: 'bool-cell' },
+              { data: "is_persistent", render: boolRender, className: 'bool-cell' },
+              { data: "samesite", }
             ],
             initComplete: function(settings, json){
                 onTableReady();
