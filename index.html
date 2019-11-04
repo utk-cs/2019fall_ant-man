@@ -19,21 +19,24 @@
       document.getElementById('message').innerHTML = host_key;
     </script>
     
-    
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.0/css/buttons.dataTables.min.css">
-
-
+    <!-- Bootstrap CSS/JS 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  -->
+    <!-- Datatables with Select and Bootstrap-Responise extensions CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+    <!--<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css">
 
-    
-   
+    <!-- Datatables with Select and Bootstrap-Responise extensions JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.6.0/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
 
     <!-- jQuery Modal -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
@@ -89,6 +92,15 @@
 
       .bool-cell {
         text-align: center;
+      }
+
+      .select-item {
+        display: none!important;
+      }
+
+      .wrap-40 {
+        max-width: 40ch;
+        word-wrap: break-word;
       }
     </style>
     
@@ -237,6 +249,9 @@
             scrollX: true,
             scrollY: true,
             select: 'single',
+            responsive: {
+              details: false
+            },
             ajax: function(data, callback, settings) {
               var rv = {};
               console.log("z");
@@ -245,11 +260,11 @@
               });
             },
             columns: [
-              { data: "creation_utc", render: dateRender },
-              { data: "host_key" },
-              { data: "name" },
-              { data: "value" },
-              { data: "path" },
+              { data: "creation_utc", render: dateRender, responsivePriority: 1 },
+              { data: "host_key", className: 'all' },
+              { data: "name", className: 'all' },
+              { data: "value", className: 'all wrap-40' },
+              { data: "path", responsivePriority: 2 },
               { data: "expires_utc", render: dateRender },
               { data: "last_access_utc", render: dateRender },
               { data: "priority" },
@@ -265,6 +280,10 @@
           });
 
           function onTableReady() {
+            $('#cookies-dt_info').parent().removeClass('col-md-5');
+            $('#cookies-dt_info').parent().addClass('col-xl-5');
+            $('#cookies-dt_paginate').parent().removeClass('col-md-7');
+            $('#cookies-dt_paginate').parent().addClass('col-xl-7');
             var tracking = table.rows(function(idx, data, node){
               if (
                 data["name"] === "_ga" || data["name"] === "__utma" || data["name"] === "__utmz" ||
@@ -282,7 +301,10 @@
             });
 
             resizeElements();
-            $(window).on('resize', resizeElements);
+            $(window).on('resize', function() {
+              resizeElements();
+              table.responsive.recalc();
+            });
             
             table.on('click', 'tr', function () {
               globalRowid = table.row(this).id();
@@ -303,34 +325,8 @@
             $("#loadingWelcome").hide();
             $.modal.close();
           };
-
-            //$("#continueWelcome").show();
         }, 10);
-        // $("#tester").click(function(){
-        //   var cookie = JSON.parse('{"creation_utc": 13198689890368478,"host_key": ".fandango.com","name": "zip","value": "","path": "/","expires_utc": 13230225890000000,"is_secure": 1,"is_httponly": 0,"last_access_utc": 13198690365647604,"has_expires": 1,"is_persistent": 1,"priority": 1,"encrypted_value": "76 31 30 68 53 3e d1 61 10 31 d2 92 8f 3c 04 93 d8 eb 52","samesite": -1}');
-        //   updateDetailedView(cookie);
-        // });
-        
-      $('.dataTables_length').addClass('bs-select');
-        //updateTable();
-
       });
-
-
-
-    </script>
-
-    <script>
-    // var elements= document.getElementsByTagName('td');
-    //   for(var i=0; i<elements.length;i++)
-    //   {
-    //   (elements)[i].addEventListener("click", function(){
-    //     alert(this.innerHTML);
-    //     console.log("hey")
-    //   });
-    //   }
-    </script>
-
-    
-    </body>
+    </script>    
+  </body>
 </html>
