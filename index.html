@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Datatables with Select and Bootstrap-Responise extensions JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
@@ -101,6 +102,41 @@
       .wrap-40 {
         max-width: 40ch;
         word-wrap: break-word;
+      }
+
+      #customSearchbar select {
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-right: none;
+      }
+
+      #customSearchbar input {
+        border-radius: 0;
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      #customSearchbar label {
+        margin-bottom: 0;
+      }
+
+      #customSearchbar button {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+        border-left: none;
+        border-color: rgb(206, 212, 218);
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+
+      #customSearchbar button:hover {
+        color: #6c757d!important;
+        background-color: transparent!important;
+        cursor: default;
       }
     </style>
     
@@ -252,6 +288,7 @@
             responsive: {
               details: false
             },
+            language: { infoFiltered: '', lengthMenu: '_MENU_', search: ''},
             ajax: function(data, callback, settings) {
               var rv = {};
               console.log("z");
@@ -274,16 +311,25 @@
               { data: "is_persistent", render: boolRender, className: 'bool-cell' },
               { data: "samesite", }
             ],
+            dom: 
+              "<'row'<'#customSearchbar.col-sm-12 d-flex justify-content-center'lf>>" +
+              "<'row'<'col-sm-12'tr>>" +
+              "<'row'<'col-sm-12 d-flex justify-content-center'p>>",
             initComplete: function(settings, json){
-                onTableReady();
+              onTableReady();
             }
           });
 
           function onTableReady() {
-            $('#cookies-dt_info').parent().removeClass('col-md-5');
+            $('#customSearchbar').append(
+              '<button class="btn btn-outline-secondary">' +
+                '<i class="fa fa-search"></i>' +
+              '</button>'
+            );
+            /*$('#cookies-dt_info').parent().removeClass('col-md-5');
             $('#cookies-dt_info').parent().addClass('col-xl-5');
             $('#cookies-dt_paginate').parent().removeClass('col-md-7');
-            $('#cookies-dt_paginate').parent().addClass('col-xl-7');
+            $('#cookies-dt_paginate').parent().addClass('col-xl-7');*/
             var tracking = table.rows(function(idx, data, node){
               if (
                 data["name"] === "_ga" || data["name"] === "__utma" || data["name"] === "__utmz" ||
@@ -301,10 +347,10 @@
             });
 
             resizeElements();
-            $(window).on('resize', function() {
+            $(window).resize(function(){setTimeout(function(){
               resizeElements();
               table.responsive.recalc();
-            });
+            }, 10)});
             
             table.on('click', 'tr', function () {
               globalRowid = table.row(this).id();
@@ -320,6 +366,10 @@
               globalCookie = cookie;
               updateDetailedView(cookie);
               $("#detailedView").show();
+            });
+
+            table.on('length.dt', function(e, settings, len){
+              resizeElements();
             });
 
             $("#loadingWelcome").hide();

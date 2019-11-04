@@ -415,12 +415,13 @@ function resizeElements() {
     console.log(navHeight, bodyHeight, contentHeight);
     $("#mainContent").css('height', numToPx(contentHeight));
 
-    var dtLengthHeight = $(".dataTables_length").outerHeight(true);
+    //var dtLengthHeight = $(".dataTables_length").outerHeight(true);
     var dtFilterHeight = $(".dataTables_filter").outerHeight(true);
-    var dtInfoHeight = $(".dataTables_info").outerHeight(true);
+    //var dtInfoHeight = $(".dataTables_info").outerHeight(true);
     var dtPaginateHeight = $(".dataTables_paginate").outerHeight(true);
     var dtScrollHeadHeight = $(".dataTables_scrollHead").outerHeight(true);
-    var dtScrollBodyHeight = contentHeight - (dtLengthHeight + dtFilterHeight + dtInfoHeight + dtPaginateHeight + dtScrollHeadHeight);
-    console.log(dtLengthHeight, dtFilterHeight, dtInfoHeight, dtPaginateHeight, dtScrollHeadHeight, dtScrollBodyHeight);
+    var dtScrollBodyHeight = contentHeight - (dtFilterHeight + dtPaginateHeight + dtScrollHeadHeight);
+    console.log(dtFilterHeight, dtPaginateHeight, dtScrollHeadHeight, dtScrollBodyHeight);
+    
     $(".dataTables_scrollBody").css('height', numToPx(dtScrollBodyHeight));
 }
