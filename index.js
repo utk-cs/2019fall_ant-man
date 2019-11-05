@@ -74,6 +74,38 @@ function updateDetailedView(cookie){
     return 0; //No error hit
 }
 
+function retrieveCookies(rv) {
+    var cipher = new CC.ChromeCrypt();
+    var cookies = DBI.listCookies();
+    var cookie;
+    var thisD = jQuery.Deferred();
+    var buildD = jQuery.Deferred();
+    var progress = $("#loadingProgress");
+    function build(index) {
+        if (index >= cookies.length) {
+            buildD.resolve();
+        } else {
+            cookie = cookies[index];
+            cookie["rowid"] = index;
+            if (cookie["encrypted_value"] !== null && cookie["encrypted_value"] !== '') {
+                cookie["value"] = cipher.decrypt(cookie["encrypted_value"]);
+            }
+
+            progress.html(Math.round((index/cookies.length) * 100));
+            setTimeout(build, 0, index+1);
+        }
+
+        return buildD.promise();
+    }
+
+    build(0).then(function(){
+        rv["data"] = cookies;
+        thisD.resolve();
+    });
+
+    return thisD.promise();
+}
+
 function updateTable() {
     console.log("sekhfsre");
     const DBI = require('./db_interface').ChromeDB;
@@ -83,7 +115,7 @@ function updateTable() {
     var count = 0;
     console.log("Got cookies.");
 
-    var table = $("#dtHorizontalVerticalExample");
+    var table = $("#cookies-dt");
     var heading = 
         "<thead>" +
             "<tr>" +
@@ -383,12 +415,13 @@ function resizeElements() {
     console.log(navHeight, bodyHeight, contentHeight);
     $("#mainContent").css('height', numToPx(contentHeight));
 
-    var dtLengthHeight = $(".dataTables_length").outerHeight(true);
+    //var dtLengthHeight = $(".dataTables_length").outerHeight(true);
     var dtFilterHeight = $(".dataTables_filter").outerHeight(true);
-    var dtInfoHeight = $(".dataTables_info").outerHeight(true);
+    //var dtInfoHeight = $(".dataTables_info").outerHeight(true);
     var dtPaginateHeight = $(".dataTables_paginate").outerHeight(true);
     var dtScrollHeadHeight = $(".dataTables_scrollHead").outerHeight(true);
-    var dtScrollBodyHeight = contentHeight - (dtLengthHeight + dtFilterHeight + dtInfoHeight + dtPaginateHeight + dtScrollHeadHeight);
-    console.log(dtLengthHeight, dtFilterHeight, dtInfoHeight, dtPaginateHeight, dtScrollHeadHeight, dtScrollBodyHeight);
+    var dtScrollBodyHeight = contentHeight - (dtFilterHeight + dtPaginateHeight + dtScrollHeadHeight);
+    console.log(dtFilterHeight, dtPaginateHeight, dtScrollHeadHeight, dtScrollBodyHeight);
+    
     $(".dataTables_scrollBody").css('height', numToPx(dtScrollBodyHeight));
 }
