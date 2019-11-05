@@ -116,10 +116,12 @@
         border-radius: 0;
         margin-left: 0;
         margin-right: 0;
+        width: 100%;
       }
 
       #customSearchbar label {
         margin-bottom: 0;
+        width: 100%;
       }
 
       #customSearchbar button {
@@ -137,6 +139,10 @@
         color: #6c757d!important;
         background-color: transparent!important;
         cursor: default;
+      }
+
+      #cookies-dt_filter {
+        width: 50%;
       }
 
       #cookieList, #cookieView {
@@ -328,6 +334,10 @@
           });
 
           function onTableReady() {
+            $('#customSearchbar select').removeClass('form-control-sm custom-select-sm');
+            $('#customSearchbar select').addClass('form-control-md custom-select-md');
+            $('#customSearchbar input').removeClass('form-control-sm');
+            $('#customSearchbar input').addClass('form-control-md');
             $('#customSearchbar').append(
               '<button class="btn btn-outline-secondary">' +
                 '<i class="fa fa-search"></i>' +
