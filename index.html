@@ -138,6 +138,11 @@
         background-color: transparent!important;
         cursor: default;
       }
+
+      #cookieList, #cookieView {
+        border: 2px solid #dee2e6;
+        border-radius: 32px;
+      }
     </style>
     
     <nav id="mainNav" class="navbar navbar-expand-sm bg-dark navbar-dark">
@@ -187,8 +192,9 @@
       </div>
     </div>
     <div id="mainContent" class="row">
-      <div id="cookieList" class="col-sm-6">
-          <table id="cookies-dt" class="table table-striped table-bordered table-sm " cellspacing="0" width="100%">
+      <div class="col-sm-6">
+        <div id="cookieList" class="col-sm-12">
+          <table id="cookies-dt" class="table table-striped table-bordered table-md" cellspacing="0" width="100%">
               <thead>
                   <tr>
                       <th>Creation Date</th>
@@ -207,9 +213,10 @@
                   </tr>
               </thead>
           </table>
+        </div>
       </div>
-      <div id="cookieView" class="col-sm-6" style="overflow-x: auto;">
-        <div class="row">
+      <div class="col-sm-6" style="overflow-x: auto;">
+        <div id="cookieView" class="cal-sm-12">
           <table id="detailedView" class="table table-striped" style="display: none;">
             <thead>
               <th colspan="2" class="text-center">
