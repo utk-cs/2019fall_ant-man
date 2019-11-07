@@ -3,6 +3,7 @@ var globalCookie ; // cookie to store the present cookie being shown on the deta
 var oldCookie; //Copy of cookie before modification. 
 var globalRowid;
 const DBI = require('./db_interface').ChromeDB;
+DBI.syncLocal();
 const CC = require('./cookie_crypt');
 
 console.log("this works");
@@ -425,3 +426,6 @@ function resizeElements() {
     
     $(".dataTables_scrollBody").css('height', numToPx(dtScrollBodyHeight));
 }
+var creation_utc = makeCreationTime();
+var x = parseInt(creation_utc,10) + Math.floor((Math.random() * 1000));
+console.log (x);

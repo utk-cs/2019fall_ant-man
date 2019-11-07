@@ -36,7 +36,7 @@ class ChromeCrypt {
                                                                             // Probably decrypt is getting called before cipher is made or something.
 
                 // If ctext begins with v10, remove it
-                if (Buffer.from("v10").equals(ctext.slice(0, 3))) {
+                if (Buffer.from("v11").equals(ctext.slice(0, 3))) {
                     ctext = ctext.slice(3);
                 }
 
