@@ -41,7 +41,11 @@ function updateDetailedView(cookie){
         value = cookie[key];
         if (key === "value") {
             if (cookie["encrypted_value"] !== null) {
-                value = cipher.decrypt(cookie["encrypted_value"]);
+                try{
+                    value = cipher.decrypt(cookie["encrypted_value"]);
+                }catch{
+                    console.log("messed up a cookie");
+                }
                 cookie.value = value;
                 cookie.encrypted_value = null;
             }
@@ -67,7 +71,7 @@ function updateDetailedView(cookie){
     }
 
     globalCookie = cookie;
-
+    
     table.empty();
     table.append(heading);
     table.append(body);
@@ -89,7 +93,12 @@ function retrieveCookies(rv) {
             cookie = cookies[index];
             cookie["rowid"] = index;
             if (cookie["encrypted_value"] !== null && cookie["encrypted_value"] !== '') {
-                cookie["value"] = cipher.decrypt(cookie["encrypted_value"]);
+                try{
+                    cookie["value"] = cipher.decrypt(cookie["encrypted_value"]);
+                }catch{
+                    console.log("messed up a cookie");
+                }
+                
             }
 
             progress.html(Math.round((index/cookies.length) * 100));
@@ -320,8 +329,23 @@ function modifyCookie(){
     }
 }
 
-function submitCookie(){
+function revertCookie(){
+    console.log("starting revert");
+    console.log(oldCookie, globalCookie);
+    updateDetailedView(oldCookie);
+    globalCookie = oldCookie;
 
+    /*if (
+        globalCookie.host_key === oldCookie.host_key &&
+        globalCookie.name === oldCookie.name &&
+        globalCookie.path === oldCookie.path
+    ) {
+        DBI.modifyCookie(oldCookie);
+    } else {
+        DBI.deleteCookie(globalCookie);
+        DBI.addCookie(oldCookie);
+    }*/
+    console.log("end revert");
 }
 
 //reusued stack overflow snippet
