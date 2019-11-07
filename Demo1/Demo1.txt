@@ -1,0 +1,52 @@
+[Intro] (Isaac)
+Cookies are an extremely useful tool for browsing the web. In a nutshell, cookies are small bits of data stored on your computer by websites when you visit them. Because they are stored locally, they persist between sessions. That’s how websites are able to keep you logged in when you check that box. However, they can and are abused by websites to track what other websites you’ve been to. So it’s important to have detailed knowledge and control of your cookies, something Chrome doesn’t provide. As you can see here. Chrome only offers a limited interface for viewing one cookie at a time. It doesn’t allow searching by value and doesn’t even give a useful interface for editing them. That’s why we made Cookie Monsterrr, to provide an intuitive way for viewing, searching, and editing YOUR cookies.
+
+
+
+
+
+
+
+
+
+
+
+
+ (Abhi) 
+So, has anyone tried to buy something on amazon and see ads for that product on another website. The reason this happens is because of browser cookies. Some are useful, like the ones isaac was talking about. Others track your activity online and sell that information to advertisers, like these. How does someone know which of their cookies are tracking you? Let’s see how they look on chrome and compare the difference. So, let’s see what Papa John’s been up to. So, I see a bunch of cookies, but no insight on them. On our application, the tracking cookies are flagged. More information on how they’re flagged is on our learn more page. On top of this, we have a quick page to see more information on which ones are tracking you, potentially could be tracking you, and are not. So now, we can see which ones are tracking your information, what can do we do about it?
+
+Ask audience about how you try to buy something on amazon and see ad on it on another website
+Difference between tracking cookies and non-tracking cookies
+ Talk about how our application flags cookies that are tracking information on you
+Talk about different search parameters available 
+Google chrome allows you to view cookies on browser, but no insight on what these cookies mean/they are doing
+Search papa john’s cookie on chrome and our application for google analytics
+
+Raise your hand if you’ve tried to buy something on amazon before and see ads for that same product on another site?
+The reason that happens is because of browser cookies. Some of these cookies are good, such as keeping track of your language preferences. Unfortunately  
+
+
+
+
+
+
+(Kishan)
+[RANDOMIZE/DELETE/MODIFY DEMO]
+ABHI hands off papa johns
+So Abhi just explained the types of cookies, lets looks at some of the features of COOKIE MONSTERRR
+Lets take a look at this cookie’s values
+Modify on papa johns (POLL CROWD) mention non tracking
+Abhi look up “GOOGLE ANALYTICS COOKIE”
+Randomize Cookie
+MODIFY RANDOMIZE, not only do we not give them that information, you can fight the power and waste their time :)
+EH, we dont want this cookie anyway, DELETE
+Lastly, Phil is going to run over a cool usecase
+
+
+
+[Youtube Example]
+Now protecting your privacy is not the only thing you can use Cookie Monsterrr for. Learning to modify cookies can benefit other areas of your life. Consider that you procrastinated your cs360 lab and need to work for 12 hours straight. You need some music to play while you work so you don’t lose your mind. Now you have your own playlist of saved music that is pretty long. You shuffle the playlist, but after a while you noticed that it isn’t really shuffling and is just playing the same 20-30ish songs.  This is a known bug that has been around for years but has managed to go unpatched. Fear not because Cookie Monsterrr can help us here. By going to youtube's cookies and viewing the pref we can find a flag f6 and by changing it to 8 and then reloading chrome. Boom, Youtube’s old layout. This not only fixes aforementioned playlist bugs, but most other bugs with the modern youtube UI will also not be present. 
+
+[Transition into Future Work]
+Now there is no dark theme and you won’t have any of the new useful feature so you want to be able to change back easily. One of our features we plan on adding is save states so you can easily store specific modifications and load them and unload them. 
+[Other future features] 
