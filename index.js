@@ -384,31 +384,31 @@ function makeExpiresTime() {
 }
 
 function randomCookie(cookie) {
-    cookie.creation_utc = makeCreationTime();
-    //cookie.host_key = makeRandomStr(15);
-    //cookie.name = makeRandomStr(10);
-    cookie.value = makeRandomStr(10);
-    //cookie.path = '/';
-    cookie.expires_utc = makeExpiresTime();
-    cookie.is_secure = Math.floor((Math.random() * 2));
-    cookie.is_httponly = Math.floor((Math.random() * 2));
-    cookie.last_access_utc = parseInt(creation_utc,10) + Math.floor((Math.random() * 1000));
-    cookie.has_expires = Math.floor((Math.random() * 2));
-    cookie.is_persistent = Math.floor((Math.random() * 2));
-    cookie.priority = Math.floor((Math.random() * 2));
+    var ranCookie = {};
+    ranCookie.creation_utc = makeCreationTime();
+    ranCookie.host_key = cookie.host_key;//cookie.host_key = makeRandomStr(15);
+    ranCookie.name = cookie.name;//cookie.name = makeRandomStr(10);
+    ranCookie.value = makeRandomStr(10);
+    ranCookie.path = cookie.path;//cookie.path = '/';
+    ranCookie.expires_utc = makeExpiresTime();
+    ranCookie.is_secure = Math.floor((Math.random() * 2));
+    ranCookie.is_httponly = Math.floor((Math.random() * 2));
+    ranCookie.last_access_utc = parseInt(creation_utc,10) + Math.floor((Math.random() * 1000));
+    ranCookie.has_expires = Math.floor((Math.random() * 2));
+    ranCookie.is_persistent = Math.floor((Math.random() * 2));
+    ranCookie.priority = Math.floor((Math.random() * 2));
     //cookie.encrypted_value = makeRandomStr(25);
-    cookie.samesite = Math.floor((Math.random() * 2));
+    ranCookie.samesite = Math.floor((Math.random() * 2));
 
-    return cookie;
+    return ranCookie;
 }
 
 function randomizeCookie() {
-    newCookie = randomCookie(globalCookie);
-
     oldCookie = globalCookie;
+    newCookie = randomCookie(globalCookie);
     updateDetailedView(newCookie);
     globalCookie = newCookie;
-
+    console.log("Cool",oldCookie, globalCookie);
     if (
         oldCookie.host_key === newCookie.host_key &&
         oldCookie.name === newCookie.name &&
