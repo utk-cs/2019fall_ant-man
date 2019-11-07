@@ -352,6 +352,7 @@
             $('#cookies-dt_info').parent().addClass('col-xl-5');
             $('#cookies-dt_paginate').parent().removeClass('col-md-7');
             $('#cookies-dt_paginate').parent().addClass('col-xl-7');*/
+            var numTracking = 0;
             var tracking = table.rows(function(idx, data, node){
               if (
                 data["name"] === "_ga" || data["name"] === "__utma" || data["name"] === "__utmz" ||
@@ -360,6 +361,7 @@
                 data["name"] === "s_fid" || data["name"] === "adcloud" || data["name"] === "_sn" ||
                 data["name"] === "rat_v" || data["name"] === "_ceir"
               ) {
+                numTracking++;
                 return true;
               } else {
                 return false;
@@ -393,6 +395,13 @@
             table.on('length.dt', function(e, settings, len){
               resizeElements();
             });
+            
+
+            window.localStorage;
+            localStorage.setItem("numTracked", numTracking);
+
+            numTracked = Number(localStorage.getItem("numTracked"));
+            console.log(numTracked);
 
             $("#loadingWelcome").hide();
             $.modal.close();
