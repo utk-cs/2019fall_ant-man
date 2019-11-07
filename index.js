@@ -25,7 +25,6 @@ const NAMES = {
 };
 
 function updateDetailedView(cookie){
-    console.log(cookie);
     var cipher = new CC.ChromeCrypt();
     var table = $("#detailedView");
     var heading = table.children('thead');
@@ -37,7 +36,6 @@ function updateDetailedView(cookie){
         // if (key === "path") {
         //     continue;
         // }
-        
         value = cookie[key];
         if (key === "value") {
             if (cookie["encrypted_value"] !== null) {
@@ -85,6 +83,10 @@ function retrieveCookies(rv) {
     var cookie;
     var thisD = jQuery.Deferred();
     var buildD = jQuery.Deferred();
+    window.localStorage;
+
+    localStorage.setItem("totalCookies", cookies.length);
+
     var progress = $("#loadingProgress");
     function build(index) {
         if (index >= cookies.length) {
@@ -104,7 +106,9 @@ function retrieveCookies(rv) {
             progress.html(Math.round((index/cookies.length) * 100));
             setTimeout(build, 0, index+1);
         }
-
+        
+        console.log("cookie length");
+        console.log(cookies.length);
         return buildD.promise();
     }
 

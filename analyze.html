@@ -7,11 +7,18 @@
           google.charts.load('current', {'packages':['corechart']});
           google.charts.setOnLoadCallback(drawChart);
     
-          function drawChart() { 
+          function drawChart() {
+            var numTracked = Number(localStorage.getItem("numTracked"));
+            var totalCookies = Number(localStorage.getItem("totalCookies"));
+
+            var remainingCookies = totalCookies - numTracked;
+
+
+
             var data = google.visualization.arrayToDataTable([
               ['Task', 'Hours per Day'],
-              ['Non-tracking',      1895],
-              ['Tracking',     552],
+              ['Non-tracking',      remainingCookies],
+              ['Tracking',     numTracked],
               ['Potentially Tracking',  743]
             ]);
     

@@ -378,9 +378,9 @@
             
             table.on('click', 'tr', function () {
               globalRowid = table.row(this).id();
-              console.log(globalRowid);
+              // console.log(globalRowid);
               var rowData = table.row(this).data();
-              console.log(rowData);
+              // console.log(rowData);
               var cookieID = {
                 host_key: rowData["host_key"],
                 name: rowData["name"],
@@ -398,11 +398,11 @@
             
 
             window.localStorage;
+
             localStorage.setItem("numTracked", numTracking);
+            localStorage.setItem("numCookies", table.rows);
 
             numTracked = Number(localStorage.getItem("numTracked"));
-            console.log(numTracked);
-
             $("#loadingWelcome").hide();
             $.modal.close();
           };
