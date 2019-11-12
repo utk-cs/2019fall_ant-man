@@ -283,14 +283,75 @@
         });
 
         setTimeout(() => {
+
+
+
           function dateRender(data, type, row) {
             if (type === 'search' || type === 'display') {
-              return simpleDate(data);
+      
+
+              var simplifiedDate = simpleDate(data)
+              // var str = simplifiedDate.split(" ");
+
+              // return simplifiedDate
+              findPotential(simplifiedDate);
+              return simplifiedDate;
             }
 
             return data;
           }
 
+          var potentialTracking = 0;
+          function findPotential(simplifiedDate) {
+              var dateHash = {
+                  Jan : 1,
+                  Feb: 2,
+                  Mar: 3,
+                  Apr: 4,
+                  May: 5,
+                  Jun: 6,
+                  Jul: 7,
+                  Aug: 8,
+                  Sep: 9,
+                  Oct: 10,
+                  Nov: 11,
+                  Dec: 12
+                };
+
+
+            //get rid of all commas in date
+            simplifiedDate = simplifiedDate.replace(/,/g , '');
+            var str = simplifiedDate.split(" ");
+
+            //getting today's date
+            var today = new Date();
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); 
+            var yyyy = today.getFullYear();
+
+            today = mm + '/' + dd + '/' + yyyy;
+
+            //change formatting for expiration date
+            expirationDate = dateHash[str[0]] + '/' + str[1] + '/' + str[2];
+
+            var currentDate = new Date(today);
+            var expireDate = new Date(expirationDate);
+
+            //get difference between expiration date and current date in days
+            var daysApart = ((expireDate.getTime() - currentDate.getTime()) / 1000);
+            daysApart /= 60;
+            daysApart /= 1440;
+
+            if (daysApart >= 90) {
+              potentialTracking++;
+            }
+
+            // console.log(daysApart);
+            // console.log(expirationDate);
+            // console.log(today);
+            // console.log(potentialTracking);
+          }
+          
           function boolRender(data, type, row) {
             if (type === 'display') {
               return `<input class="big-checkbox" type="checkbox" ${data === 1 ? "checked" : ""} disabled>`
@@ -298,6 +359,9 @@
 
             return data;
           }
+
+
+
 
           var table = $('#cookies-dt').DataTable({
             scrollX: true,
@@ -352,8 +416,11 @@
             $('#cookies-dt_info').parent().addClass('col-xl-5');
             $('#cookies-dt_paginate').parent().removeClass('col-md-7');
             $('#cookies-dt_paginate').parent().addClass('col-xl-7');*/
+
+
             var numTracking = 0;
             var tracking = table.rows(function(idx, data, node){
+
               if (
                 data["name"] === "_ga" || data["name"] === "__utma" || data["name"] === "__utmz" ||
                 data["name"] === "_gcl_au" || data["name"] === "__qca" || data["name"] === "s_ecid" ||
