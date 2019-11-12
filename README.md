@@ -1,4 +1,8 @@
 # 2019fall_ant-man
+# Cookie Monsterrrr
+
+## Description
+Cookie Monster is a user-friendly tool that allows you to view your cookies and learn more about them. Have you ever wondered where most of your cookies come from, what information they hold, or even, if a cookie tracking you? Cookie Monsterrr will help you find out just that and more with a click of a button. Learn to View, Edit, and Delete your cookies with __Cookie Monster__!!
 
 ## Instalation
 
@@ -82,3 +86,8 @@ rv = ChromeDB.addCookie(retrievedCookie);
 // this is automatically taken care of in the interface.
 // Simply edit the value property.
 ```
+## Team Members:
+-  Ktailor34
+-  abhi-ravi
+-  phicks6
+-  isikkema
