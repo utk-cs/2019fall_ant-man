@@ -285,7 +285,7 @@
         setTimeout(() => {
 
 
-
+          var potentialTracking = 0;
           function dateRender(data, type, row) {
             if (type === 'search' || type === 'display') {
       
@@ -301,9 +301,8 @@
             return data;
           }
 
-          var potentialTracking = 0;
           function findPotential(simplifiedDate) {
-              var dateHash = {
+            var dateHash = {
                   Jan : 1,
                   Feb: 2,
                   Mar: 3,
@@ -349,7 +348,7 @@
             // console.log(daysApart);
             // console.log(expirationDate);
             // console.log(today);
-            // console.log(potentialTracking);
+            console.log(potentialTracking);
           }
           
           function boolRender(data, type, row) {
