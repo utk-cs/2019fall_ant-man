@@ -1,12 +1,37 @@
-# 2019fall_ant-man
 # Cookie Monsterrrr
 
 ## Description
-Cookie Monster is a user-friendly tool that allows you to view your cookies and learn more about them. Have you ever wondered where most of your cookies come from, what information they hold, or even, if a cookie tracking you? Cookie Monsterrr will help you find out just that and more with a click of a button. Learn to View, Edit, and Delete your cookies with __Cookie Monster__!!
+Cookie Monster is a user-friendly tool that allows you to view, edit, and delete your cookies. Have you ever wondered where most of your cookies come from, what information they hold, or even, if a cookie tracking you? Cookie Monsterrr will help you find out just that and more with a click of a button. Learn to View, Edit, and Delete your cookies with __Cookie Monster__!!
 
-## Instalation
+## Installation for Mac
+1. Clone the repo
+2. Run ```npm install```
+3. Run ```node .\createDB.js```
+4. Run ```npm rebuild```
+5. Run ```.\node_modules\.bin\electron-rebuild```
+6. Navigate to cloned directory and Run ```npm start```
 
 ## Use
+Cookie Monsterrr allows you to view, modify, and delete your cookies. Cookies marked in red are tracking your information.
+
+* The **Modify Cookie** option allows you to personalize what information you want the cookie's host to receve.
+* The **Randomize Cookie** option scrambles what information the cookie's host previously had on you.
+* The **Delete Cookie** option removes it from the table, as well as on your system.
+* The **Revert Cookie** option changes all information to previous values
+![Alt text](screenshots/main-screenshot.png)
+
+
+#### Analyze
+* A breakdown of your non-tracking vs. tracking cookies is shown in the Analyze tab 
+![Alt text](screenshots/analyze-screenshot.png)
+
+
+
+#### Learn more
+* More information about the details of the specific cookies are found on the learn more tab
+![Alt text](screenshots/learnmore-screenshot.png)
+
+ 
 
 ## Cookies
 
