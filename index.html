@@ -9,14 +9,35 @@
       window.$ = window.jQuery = require('jquery');
       window.Bootstrap = require('bootstrap');
       require( 'datatables.net-bs4' )();
-      /*const db = new Database('cookies.db', { verbose: console.log });
-      var sql = 'CREATE TABLE cookies(creation_utc INTEGER NOT NULL,host_key TEXT NOT NULL,name TEXT NOT NULL,value TEXT NOT NULL,path TEXT NOT NULL,expires_utc INTEGER NOT NULL,is_secure INTEGER NOT NULL,is_httponly INTEGER NOT NULL,last_access_utc INTEGER NOT NULL,has_expires INTEGER NOT NULL DEFAULT 1,is_persistent INTEGER NOT NULL DEFAULT 1,priority INTEGER NOT NULL DEFAULT 1,encrypted_value BLOB DEFAULT \'\',samesite INTEGER NOT NULL DEFAULT -1,UNIQUE (host_key, name, path))';
-      var sql2 = 'INSERT INTO cookies (creation_utc, host_key, name, value, path, expires_utc, is_secure, is_httponly, last_access_utc) VALUES (1, "hello", "hello", "hello", "hello", 1, 1, 1, 1)'
-      var sql3 = 'SELECT host_key, name FROM cookies'
-      console.log(db.exec(sql1));
-      console.log(db.exec(sql2));
-      var host_key = console.log(db.exec(sql3));
-      document.getElementById('message').innerHTML = host_key;*/
+      const fs = require("fs");
+      
+      if (!fs.existsSync("cookies.db")) {
+        // open database in memory
+        const Database = require('better-sqlite3');
+        const db = new Database('cookies.db', { verbose: console.log });
+        var sql = 'CREATE TABLE cookies(creation_utc INTEGER NOT NULL,host_key TEXT NOT NULL,name TEXT NOT NULL,value TEXT NOT NULL,path TEXT NOT NULL,expires_utc INTEGER NOT NULL,is_secure INTEGER NOT NULL,is_httponly INTEGER NOT NULL,last_access_utc INTEGER NOT NULL,has_expires INTEGER NOT NULL DEFAULT 1,is_persistent INTEGER NOT NULL DEFAULT 1,priority INTEGER NOT NULL DEFAULT 1,encrypted_value BLOB DEFAULT \'\',samesite INTEGER NOT NULL DEFAULT -1,UNIQUE (host_key, name, path))';
+        console.log(db.exec(sql));
+        const homedir = require('os').homedir();
+        if (process.platform === "linux") {
+            DBPATH = `${homedir}/.config/google-chrome/Default/Cookies`;
+        } else if (process.platform === "darwin") {
+            DBPATH = `${homedir}/Library/Application Support/Google/Chrome/Default/Cookies`;
+        }
+        fs.copyFile(DBPATH, 'cookies.db', (err) => {
+          if (err) {
+            alert(
+              "This application only supports OSX and Linux. Additionally, it only supports Chromium cookies. " +
+              "If you do not have Chromium installed or do not have any cookies, we can do nothing for you."
+            );
+            throw err
+          };
+          console.log('source.txt was copied to destination.txt');
+        });
+        console.log("DB Created.")
+      } else {
+        console.log("DB Exists.")
+      }
+      
     </script>
     
     <!-- Bootstrap CSS/JS 
