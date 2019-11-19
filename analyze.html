@@ -25,7 +25,21 @@
             var options = {
               title: 'Cookie Data',
               width: '100vh',
-              height: '100vh'
+              height: '100vh',
+
+              legend: {
+                alignment: 'center',
+                  position: 'top'
+              }
+
+              // chartArea: {
+              //   left: "0%",
+              //   top: "0%",
+              //   height: "100%",
+              //   width: "100%"
+              // },
+
+
             };
     
             var chart = new google.visualization.PieChart(document.getElementById('piechart'));
@@ -52,8 +66,8 @@
     
    
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <title>Hello, world!</title>
-    <style>
+    <!-- <title>Hello, world!</title> -->
+    <!-- <style>
       .vertScrollbar {
       position: relative;
       height: 800px;
@@ -74,7 +88,7 @@
         padding: 0;
       }
       
-    </style>
+    </style> -->
     
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <div id="button">
@@ -103,8 +117,7 @@
       </ul>
     </nav>
   </head>
-  <body style="overflow: hidden;">
-        <div id="piechart" class="justify-content-center" style="width: 100vh; height: 80vh;"></div>
-      
+  <body >
+        <div id="piechart" class="d-flex justify-content-center" style="width: 100vh; height: 100vh; display:block; margin:0 auto"></div>
     </body>
 </html>
