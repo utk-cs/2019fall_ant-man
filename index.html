@@ -94,8 +94,16 @@
         overflow-x: hidden;
       }
       
-
       .dropbtn {
+        background-color: #3498DB;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+      }
+
+      .learnButton {
         background-color: #3498DB;
         color: white;
         padding: 16px;
@@ -246,8 +254,10 @@
           <a class="nav-link" href="sample.html">Active</a>
         </li> -->
         <li class="nav-item">
-            <div id="button">
-          <a class="nav-link" href="learn_more.html" target="_blank">Learn More</a>
+            <!-- <div id="button"> -->
+            <div id="learnButton">
+            <!-- <a class="nav-link" href="learn_more.html" target="_blank">Learn More</a> -->
+            <button onclick="myFunction1()" class="nav-link">Learn More</button>
             </div>
         </li>
         <li class="nav-item">
@@ -256,7 +266,7 @@
             <div class="dropdown">
               <button onclick="myFunction()" class="dropbtn">Analyze</button>
               <div id="myDropdown" class="dropdown-content">
-                <a href="#">Link 1</a>
+                <a href="analyze.html" target="_blank">Cookie Breakdown</a>
                 <a href="#">Link 2</a>
                 <a href="#">Link 3</a>
               </div>
