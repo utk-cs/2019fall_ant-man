@@ -9,7 +9,11 @@
 
       /*toggle between hiding and showing the dropdown content */
       function myFunction() {
-      document.getElementById("myDropdown").classList.toggle("show");
+        document.getElementById("myDropdown").classList.toggle("show");
+      }
+
+      function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
       }
 
       // Close the dropdown menu if the user clicks outside of it
@@ -103,13 +107,8 @@
         cursor: pointer;
       }
 
-      .learnButton {
-        background-color: #3498DB;
-        color: white;
-        padding: 16px;
-        font-size: 16px;
-        border: none;
-        cursor: pointer;
+      .learnButton:hover, .learnButton:focus {
+        background-color: #2980B9;
       }
 
       /* Dropdown button on hover & focus */
@@ -257,7 +256,7 @@
             <!-- <div id="button"> -->
             <div id="learnButton">
             <!-- <a class="nav-link" href="learn_more.html" target="_blank">Learn More</a> -->
-            <button onclick="myFunction1()" class="nav-link">Learn More</button>
+            <button class="dropbtn" onclick=" window.open('learn_more.html', '_blank')" >Learn More</button>
             </div>
         </li>
         <li class="nav-item">
@@ -274,7 +273,9 @@
           </div>
       </li>
         <li class="nav-item">
-          <a class="nav-link" href="https://github.com/utk-cs/2019fall_ant-man/blob/master/README.md" target="_blank">Read Me</a>
+          <!-- <a class="nav-link" href="https://github.com/utk-cs/2019fall_ant-man/blob/master/README.md" target="_blank">Read Me</a> -->
+          <!-- <button onclick="location.href='https://github.com/utk-cs/2019fall_ant-man/blob/master/README.md';" target = "_blank" class="dropbtn">Read Me</button> -->
+          <button class="dropbtn" onclick=" window.open('https://github.com/utk-cs/2019fall_ant-man/blob/master/README.md', '_blank')" >Read Me</button>
         </li>
         <!-- <li class="nav-item">
           <a class="nav-link disabled" href="#">Disabled</a>
