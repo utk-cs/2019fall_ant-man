@@ -576,9 +576,24 @@
             numTracked = Number(localStorage.getItem("numTracked"));
             $("#loadingWelcome").hide();
             $.modal.close();
+		
           };
         }, 10);
       });
+	function KeyPress(e){
+		var evtobj = window.event? event : e
+		if(evtobj.ctrlKey){
+			console.log("control");
+		}
+		if(evtobj.keyCode == 90){
+			console.log("z key");
+		}
+		if(evtobj.keyCode == 90 && evtobj.ctrlKey){
+			console.log("control z");
+		}
+	}
+	console.log("setting up control z");
+	document.onkeydown = KeyPress;
     </script>    
   </body>
 </html>
