@@ -2,7 +2,7 @@ var mode = 0;
 var globalCookie ; // cookie to store the present cookie being shown on the detailed view
 var oldCookie; //Copy of cookie before modification. 
 var globalRowid;
-var changeList = [];
+var changeMap = {};
 const DBI = require('./db_interface').ChromeDB;
 const CC = require('./cookie_crypt');
 
@@ -313,7 +313,7 @@ function modifyCookie(){
             }
 
             oldCookie = globalCookie;
-            changeList.push(oldCookie);
+            changeMap[oldCookie.host_key + oldCookie.name].push(oldCookie);
             updateDetailedView(newCookie);
             globalCookie = newCookie;
 
@@ -334,12 +334,14 @@ function modifyCookie(){
     }
 }
 
-function revertCookie(){
-    console.log("starting revert");
-    if(changeList.length == 0){
+//Allows users to undo a change to a cookie
+function undoCookie(){
+    console.log("starting revert",changeMap);
+    //if(changeMap[cookie.host_key + cookie.name] == NULL){}
+    if(changeMap[globalCookie.host_key + globalCookie.name].length == 0){
         return 0;
     }
-    oldCookie = changeList.pop();
+    oldCookie = changeMap[globalCookie.host_key + globalCookie.name].pop();
     console.log(oldCookie, globalCookie);
     updateDetailedView(oldCookie);
     globalCookie = oldCookie;
@@ -354,6 +356,18 @@ function revertCookie(){
         DBI.addCookie(oldCookie);
     }
     console.log("end revert");
+}
+
+//Make map key
+function mapKey(cookie){
+    return cookie.host_key + cookie.name;
+
+}
+
+function trackChanges(cookie){
+    if(changeMap[cookie.host_key + cookie.name] == undefined){
+        changeMap[cookie.host_key + cookie.name] = [];
+    }
 }
 
 //reusued stack overflow snippet
@@ -413,7 +427,8 @@ function randomCookie(cookie) {
 
 function randomizeCookie() {
     oldCookie = globalCookie;
-    changeList.push(oldCookie);
+    changeMap[oldCookie.host_key + oldCookie.name].push(oldCookie);
+
     newCookie = randomCookie(globalCookie);
     updateDetailedView(newCookie);
     globalCookie = newCookie;
