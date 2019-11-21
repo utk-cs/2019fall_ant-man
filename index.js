@@ -2,6 +2,7 @@ var mode = 0;
 var globalCookie ; // cookie to store the present cookie being shown on the detailed view
 var oldCookie; //Copy of cookie before modification. 
 var globalRowid;
+var changeList = [];
 const DBI = require('./db_interface').ChromeDB;
 const CC = require('./cookie_crypt');
 
@@ -312,6 +313,7 @@ function modifyCookie(){
             }
 
             oldCookie = globalCookie;
+            changeList.push(oldCookie);
             updateDetailedView(newCookie);
             globalCookie = newCookie;
 
@@ -334,10 +336,13 @@ function modifyCookie(){
 
 function revertCookie(){
     console.log("starting revert");
+    if(changeList.length == 0){
+        return 0;
+    }
+    oldCookie = changeList.pop();
     console.log(oldCookie, globalCookie);
     updateDetailedView(oldCookie);
     globalCookie = oldCookie;
-
     if(
         globalCookie.host_key === oldCookie.host_key &&
         globalCookie.name === oldCookie.name &&
@@ -408,6 +413,7 @@ function randomCookie(cookie) {
 
 function randomizeCookie() {
     oldCookie = globalCookie;
+    changeList.push(oldCookie);
     newCookie = randomCookie(globalCookie);
     updateDetailedView(newCookie);
     globalCookie = newCookie;
