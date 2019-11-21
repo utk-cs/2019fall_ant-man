@@ -38,9 +38,9 @@
       if (!fs.existsSync("cookies.db")) {
         // open database in memory
         const Database = require('better-sqlite3');
-        const db = new Database('cookies.db', { verbose: console.log });
+        const db = new Database('cookies.db', { verbose: //console.log });
         var sql = 'CREATE TABLE cookies(creation_utc INTEGER NOT NULL,host_key TEXT NOT NULL,name TEXT NOT NULL,value TEXT NOT NULL,path TEXT NOT NULL,expires_utc INTEGER NOT NULL,is_secure INTEGER NOT NULL,is_httponly INTEGER NOT NULL,last_access_utc INTEGER NOT NULL,has_expires INTEGER NOT NULL DEFAULT 1,is_persistent INTEGER NOT NULL DEFAULT 1,priority INTEGER NOT NULL DEFAULT 1,encrypted_value BLOB DEFAULT \'\',samesite INTEGER NOT NULL DEFAULT -1,UNIQUE (host_key, name, path))';
-        console.log(db.exec(sql));
+        //console.log(db.exec(sql));
         const homedir = require('os').homedir();
         if (process.platform === "linux") {
             DBPATH = `${homedir}/.config/google-chrome/Default/Cookies`;
@@ -55,11 +55,11 @@
             );
             throw err
           };
-          console.log('source.txt was copied to destination.txt');
+          //console.log('source.txt was copied to destination.txt');
         });
-        console.log("DB Created.")
+        //console.log("DB Created.")
       } else {
-        console.log("DB Exists.")
+        //console.log("DB Exists.")
       }
       
     </script>
@@ -372,7 +372,7 @@
           viewer.on('click', '#Delete', function(){
             try {
               var table = $('#cookies-dt').DataTable();
-              console.log(globalRowid);
+              ////console.log(globalRowid);
               table.row(globalRowid).remove();
               $(`#${globalRowid}`).remove();
               deleteCookie(globalCookie);
@@ -443,10 +443,10 @@
               potentialTracking++;
             }
 
-            // console.log(daysApart);
-            // console.log(expirationDate);
-            // console.log(today);
-            // console.log(potentialTracking);
+            // //console.log(daysApart);
+            // //console.log(expirationDate);
+            // //console.log(today);
+            // //console.log(potentialTracking);
           }
           
           function boolRender(data, type, row) {
@@ -470,7 +470,7 @@
             language: { infoFiltered: '', lengthMenu: '_MENU_', search: ''},
             ajax: function(data, callback, settings) {
               var rv = {};
-              console.log("z");
+              //console.log("z");
               retrieveCookies(rv).then(function(){
                 callback(rv);
               });
@@ -550,9 +550,9 @@
             
             table.on('click', 'tr', function () {
               globalRowid = table.row(this).id();
-              // console.log(globalRowid);
+              // //console.log(globalRowid);
               var rowData = table.row(this).data();
-              // console.log(rowData);
+              // //console.log(rowData);
               var cookieID = {
                 host_key: rowData["host_key"],
                 name: rowData["name"],
@@ -569,7 +569,7 @@
               resizeElements();
             });
             
-            console.log(popularHash);
+            //console.log(popularHash);
 
             window.localStorage;
 
@@ -587,7 +587,7 @@
 		var evtobj = window.event? event : e
 		
 		if(evtobj.keyCode == 90 && evtobj.ctrlKey){
-      console.log("control z");
+      //console.log("control z");
       undoCookie();
 		}
 	}
