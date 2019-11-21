@@ -6,6 +6,8 @@ var changeMap = {};
 const DBI = require('./db_interface').ChromeDB;
 const CC = require('./cookie_crypt');
 
+var potentialTracking = 0;
+
 console.log("this works");
 
 const NAMES = {

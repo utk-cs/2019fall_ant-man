@@ -12,6 +12,8 @@
             var totalCookies = Number(localStorage.getItem("totalCookies"));
 
             var remainingCookies = totalCookies - numTracked;
+            var potential = remainingCookies * .2;
+            remainingCookies = remainingCookies - potential;
 
 
 
@@ -19,7 +21,7 @@
               ['Task', 'Hours per Day'],
               ['Non-tracking',      remainingCookies],
               ['Tracking',     numTracked],
-              ['Potentially Tracking',  743]
+              ['Potentially Tracking',  potential]
             ]);
     
             var options = {
