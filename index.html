@@ -446,7 +446,7 @@
             // console.log(daysApart);
             // console.log(expirationDate);
             // console.log(today);
-            console.log(potentialTracking);
+            // console.log(potentialTracking);
           }
           
           function boolRender(data, type, row) {
@@ -498,7 +498,7 @@
               onTableReady();
             }
           });
-
+          var popularHash = {};
           function onTableReady() {
             $('#customSearchbar select').removeClass('form-control-sm custom-select-sm');
             $('#customSearchbar select').addClass('form-control-md custom-select-md');
@@ -525,6 +525,14 @@
                 data["name"] === "s_fid" || data["name"] === "adcloud" || data["name"] === "_sn" ||
                 data["name"] === "rat_v" || data["name"] === "_ceir"
               ) {
+                if(data["host_key"] in popularHash) {
+                  popularHash[data["host_key"]] = 1;
+                }
+                else {
+                  popularHash[data["host_key"]] += 1;
+                }
+
+
                 numTracking++;
                 return true;
               } else {
@@ -561,6 +569,7 @@
               resizeElements();
             });
             
+            console.log(popularHash);
 
             window.localStorage;
 
