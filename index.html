@@ -335,7 +335,6 @@
                   <button type="button" id="Delete" class="btn btn-danger">Delete Cookie</button>
                   <button type="button" id="Randomize" class="btn btn-warning">Randomize Cookie</button>
                   <button type="button" id="Modify" class="btn btn-secondary">Modify Cookie</button>
-                  <button type="button" id="Revert" class="btn btn-danger">Revert Cookie</button>
                 </div>
               </th>
             </thead>
@@ -368,10 +367,6 @@
 
           viewer.on('click', '#Randomize', function(){
             randomizeCookie();
-          });
-
-          viewer.on('click', '#Revert', function(){
-            revertCookie();
           });
 
           viewer.on('click', '#Delete', function(){
@@ -582,17 +577,13 @@
       });
 	function KeyPress(e){
 		var evtobj = window.event? event : e
-		if(evtobj.ctrlKey){
-			console.log("control");
-		}
-		if(evtobj.keyCode == 90){
-			console.log("z key");
-		}
+		
 		if(evtobj.keyCode == 90 && evtobj.ctrlKey){
-			console.log("control z");
+      console.log("control z");
+      revertCookie();
 		}
 	}
-	console.log("setting up control z");
+	
 	document.onkeydown = KeyPress;
     </script>    
   </body>

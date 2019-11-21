@@ -338,16 +338,16 @@ function revertCookie(){
     updateDetailedView(oldCookie);
     globalCookie = oldCookie;
 
-    /*if (
+    if(
         globalCookie.host_key === oldCookie.host_key &&
         globalCookie.name === oldCookie.name &&
         globalCookie.path === oldCookie.path
-    ) {
+    ){
         DBI.modifyCookie(oldCookie);
-    } else {
+    }else{
         DBI.deleteCookie(globalCookie);
         DBI.addCookie(oldCookie);
-    }*/
+    }
     console.log("end revert");
 }
 
