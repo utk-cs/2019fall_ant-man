@@ -8,7 +8,7 @@ const CC = require('./cookie_crypt');
 
 var potentialTracking = 0;
 
-console.log("this works");
+//console.log("this works");
 
 const NAMES = {
     'creation_utc': 'Creation Time',
@@ -44,7 +44,7 @@ function updateDetailedView(cookie){
                 try{
                     value = cipher.decrypt(cookie["encrypted_value"]);
                 }catch{
-                    console.log("messed up a cookie");
+                    //console.log("messed up a cookie");
                 }
                 cookie.value = value;
                 cookie.encrypted_value = null;
@@ -59,8 +59,8 @@ function updateDetailedView(cookie){
             value = simpleDate(cookie["last_access_utc"])
         }
 
-        console.log(key);
-        console.log(value);
+        //console.log(key);
+        //console.log(value);
         if(value === ''){
             htmlstr = `<tr><td>${NAMES[key]}</td><td id='${key}'>''</td></tr>`;
         } else {
@@ -100,7 +100,7 @@ function retrieveCookies(rv) {
                 try{
                     cookie["value"] = cipher.decrypt(cookie["encrypted_value"]);
                 }catch{
-                    console.log("messed up a cookie");
+                    //console.log("messed up a cookie");
                 }
                 
             }
@@ -109,8 +109,8 @@ function retrieveCookies(rv) {
             setTimeout(build, 0, index+1);
         }
         
-        console.log("cookie length");
-        console.log(cookies.length);
+        //console.log("cookie length");
+        //console.log(cookies.length);
         return buildD.promise();
     }
 
@@ -123,13 +123,13 @@ function retrieveCookies(rv) {
 }
 
 function updateTable() {
-    console.log("sekhfsre");
+    //console.log("sekhfsre");
     const DBI = require('./db_interface').ChromeDB;
-    console.log("Updating table...");
+    //console.log("Updating table...");
     var cookies = DBI.listCookies();
     var total = cookies.length;
     var count = 0;
-    console.log("Got cookies.");
+    //console.log("Got cookies.");
 
     var table = $("#cookies-dt");
     var heading = 
@@ -214,7 +214,7 @@ function updateTable() {
             count++;
         
             $("#loadingProgress").html(Math.round((count/total) * 100));
-            //console.log(Math.round((count/total)*100));
+            ////console.log(Math.round((count/total)*100));
 
             setTimeout(buildRow, 0, index+1);
         }
@@ -222,13 +222,13 @@ function updateTable() {
 
     buildRow(0);
     loadingD.promise().then(function(){
-        console.log(numTracking);
-        console.log(rowid)
-        console.log(body);
+        //console.log(numTracking);
+        //console.log(rowid)
+        //console.log(body);
         table.innerHTML = "";
         table.append(heading);
         table.append(body);
-        console.log("Done");
+        //console.log("Done");
         tableD.resolve();
     });
 
@@ -287,7 +287,7 @@ function modifyCookie(){
         }else{
             var newCookie = {};
             for(var key in globalCookie){
-                console.log(key+"input");
+                ////console.log(key+"input");
                 var val = document.getElementById(key + "input");
                 if (val === null) {
                     continue;
@@ -338,13 +338,13 @@ function modifyCookie(){
 
 //Allows users to undo a change to a cookie
 function undoCookie(){
-    console.log("starting revert",changeMap);
+    //console.log("starting revert",changeMap);
     //if(changeMap[cookie.host_key + cookie.name] == NULL){}
     if(changeMap[globalCookie.host_key + globalCookie.name].length == 0){
         return 0;
     }
     oldCookie = changeMap[globalCookie.host_key + globalCookie.name].pop();
-    console.log(oldCookie, globalCookie);
+    //console.log(oldCookie, globalCookie);
     updateDetailedView(oldCookie);
     globalCookie = oldCookie;
     if(
@@ -357,7 +357,7 @@ function undoCookie(){
         DBI.deleteCookie(globalCookie);
         DBI.addCookie(oldCookie);
     }
-    console.log("end revert");
+    //console.log("end revert");
 }
 
 //Make map key
@@ -434,7 +434,7 @@ function randomizeCookie() {
     newCookie = randomCookie(globalCookie);
     updateDetailedView(newCookie);
     globalCookie = newCookie;
-    console.log("Cool",oldCookie, globalCookie);
+    //console.log("Cool",oldCookie, globalCookie);
     if (
         oldCookie.host_key === newCookie.host_key &&
         oldCookie.name === newCookie.name &&
@@ -463,7 +463,7 @@ function resizeElements() {
     var navHeight = pxToNum($("#mainNav").css('height'));
     var bodyHeight = pxToNum($("body").css('height'));
     var contentHeight = bodyHeight-navHeight;
-    console.log(navHeight, bodyHeight, contentHeight);
+    //console.log(navHeight, bodyHeight, contentHeight);
     $("#mainContent").css('height', numToPx(contentHeight));
 
     //var dtLengthHeight = $(".dataTables_length").outerHeight(true);
@@ -472,10 +472,10 @@ function resizeElements() {
     var dtPaginateHeight = $(".dataTables_paginate").outerHeight(true);
     var dtScrollHeadHeight = $(".dataTables_scrollHead").outerHeight(true);
     var dtScrollBodyHeight = contentHeight - (dtFilterHeight + dtPaginateHeight + dtScrollHeadHeight);
-    console.log(dtFilterHeight, dtPaginateHeight, dtScrollHeadHeight, dtScrollBodyHeight);
+    //console.log(dtFilterHeight, dtPaginateHeight, dtScrollHeadHeight, dtScrollBodyHeight);
     
     $(".dataTables_scrollBody").css('height', numToPx(dtScrollBodyHeight));
 }
 var creation_utc = makeCreationTime();
 var x = parseInt(creation_utc,10) + Math.floor((Math.random() * 1000));
-console.log (x);
+//console.log (x);
