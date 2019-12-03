@@ -3,13 +3,14 @@
 ## Description
 Cookie Monster is a user-friendly tool that allows you to view, edit, and delete your cookies. Have you ever wondered where most of your cookies come from, what information they hold, or even, if a cookie tracking you? Cookie Monsterrr will help you find out just that and more with a click of a button. Learn to View, Edit, and Delete your cookies with __Cookie Monster__!!
 
-## Installation for Mac
+## Installation for Mac and Ubuntu
 1. Clone the repo
 2. Run ```npm install```
 3. Run ```node .\createDB.js```
 4. Run ```npm rebuild```
 5. Run ```.\node_modules\.bin\electron-rebuild```
 6. Navigate to cloned directory and Run ```npm start```
+7. If no cookies show up try rerunning ```npm rebuild```
 
 ## Use
 Cookie Monsterrr allows you to view, modify, and delete your cookies. Cookies marked in red are tracking your information.
